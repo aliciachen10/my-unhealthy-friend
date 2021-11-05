@@ -1,6 +1,10 @@
 const User = require("./user");
-const Food = require("./food");
 const Category = require("./category");
-const exercise = require("./exercise");
-const activity = require("./activity")
+const Exercise = require("./exercise");
+const Activity = require("./activity");
+const Preference = require("./preference");
+
+
+
+module.exports = { User, Category, Exercise, Activity, Preference}
 
