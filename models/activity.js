@@ -1,28 +1,33 @@
-
-const { timeStamp } = require("console");
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require ("../config/connection");
+const {
+    Model,
+    DataTypes
+} = require("sequelize");
+const sequelize = require("../config/connection");
 
 class Activity extends Model {}
 
 
-Activity.init (
+Activity.init(
     {
-       type: DataTypes.INTEGER,
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
     },
-    {
-        activity_name: DataTypes.STRING,
+
+
+    activity_name: {
+        type: DataTypes.STRING,
         allowNull: false
-    },
-    {
-      sequelize,
-      timeStamps: false,
-      freezeTableName: true,
-      underscored: true,
-      modelName: "activity"
     }
-)
+}, 
+{
+    sequelize,
+    timeStamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: "activity"
+})
 
 module.exports = Activity
-
