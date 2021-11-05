@@ -1,7 +1,6 @@
+const { Exercise } = require('../models')
 
-const { User } = require('../models')
-
-const userData = [
+const exerciseData = [
 
 {
     distance: 4.6,
@@ -41,7 +40,7 @@ const userData = [
 
 ];
 
-const seedUser = () => User.bulkCreate(userData);
+const seedExercise = () => Exercise.bulkCreate(exerciseData);
 
 
-module.exports = seedUser
+module.exports = seedExercise
