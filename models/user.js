@@ -30,13 +30,13 @@ User.init(
             allowNull: false,
         },
 
-        category_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'category',
-                key: 'id'
-            }
-        }
+        // preference: {
+        //     type: DataTypes.INTEGER,
+        //     references: {
+        //         model: 'preference',
+        //         key: 'id'
+        //     }
+        // }
     },
     {
       sequelize,
@@ -49,4 +49,3 @@ User.init(
 
 
 module.exports = User
-
