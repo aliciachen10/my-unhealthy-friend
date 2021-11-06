@@ -1,42 +1,39 @@
 .card-body {
-    padding-top: 2%
+  padding-top: 2%;
 }
 
 .card1 {
-    margin: 1%;
+  margin: 1%;
 }
 
 .card-row {
-    justify-content: center;
+  justify-content: center;
 }
 
 .login-input {
-    margin: 1%;
+  margin: 1%;
 }
 
 .food-categories {
-    display: flex;
-    margin: 1%;
-    padding: 1%;
+  display: flex;
+  margin: 1%;
+  padding: 1%;
 }
 
 .food {
-    padding-right: 2%;
+  padding-right: 2%;
 }
 
 .btn-modal {
-    margin: .5%;
+  margin: 0.5%;
 }
 
-
 .card-outline {
-border: solid grey 1px;
+  border: solid grey 1px;
 }
 
 .submit-activity {
-    display:flex;
-    justify-content: center;
-    margin-bottom: 1%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1%;
 }
-
-
