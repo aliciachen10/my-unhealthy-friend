@@ -1,12 +1,21 @@
+body, html {
+    background-color: whitesmoke;
+}
+
 .card-body {
-    padding-top: 2%
+    padding-top: 10%;
+    background-color: rgb(104, 9, 6);
+    color: white;
+    text-align: center;
 }
 
 .card1 {
-    margin: 1%;
+    margin: .5%;
+    justify-content: center;
 }
 
 .card-row {
+    padding-top: 5%;
     justify-content: center;
 }
 
@@ -16,27 +25,27 @@
 
 .food-categories {
     display: flex;
-    margin: 1%;
+    margin: 2%;
     padding: 1%;
 }
 
 .food {
-    padding-right: 2%;
+    padding-right: 5%;
 }
 
 .btn-modal {
-    margin: .5%;
+    margin: 1%;
 }
 
 
 .card-outline {
-border: solid grey 1px;
+padding: 5%;
+border: solid grey 2px;
 }
 
 .submit-activity {
+    padding-top: 2%;
     display:flex;
     justify-content: center;
     margin-bottom: 1%;
 }
-
-
