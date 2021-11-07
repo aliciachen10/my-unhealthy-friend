@@ -44,7 +44,7 @@ Exercise.belongsTo(User, {
 //   foreignKey: 'exercise_id',
 // });
 
-//REWRITTEN SO THAT THE ROUTES WORK 
+//rewritten so routes work 
 Exercise.belongsTo(Activity, {
   foreignKey: 'activity_id',
   onDelete: 'CASCADE',
@@ -53,17 +53,6 @@ Exercise.belongsTo(Activity, {
 Activity.hasMany(Exercise, {
   foreignKey: 'activity_id',
 });
-
-//REWRITTEN: ADDED PREFERENCES
-Preference.belongsTo(User, {
-  foreignKey: 'user_id',
-  // onDelete: 'CASCADE',
-});
-
-User.hasMany(Preference, {
-  foreignKey: 'user_id',
-});
-
 
 module.exports = { User, Category, Exercise, Activity, Preference}
 

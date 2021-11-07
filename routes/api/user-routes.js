@@ -42,7 +42,7 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated exercise and preference data
   try {
     const userData = await User.findByPk(req.params.id, {
-      include: [{ model: Exercise }, { model: Preference }],
+      include: [{ model: Exercise }, { model: Category }],
     });
 
     if (!userData) {
