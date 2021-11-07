@@ -17,24 +17,19 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   // create a new exercise. creating happens in this format: 
 //   {
-//     distance: 4.6,
-//     duration: 40,
-//     calories_burned: 500,
-//     activity_id: 2,
-//     user_id: 3,
+//     "distance": 4.6,
+//     "duration": 40,
+//     "calories_burned": 500,
+//     "activity_id": 2,
+//     "user_id": 3,
 // },
 
 // insert in metequation
 
-  if (activity_id === 1) {
-    // calories_burned = 
-
-  // Duration of physical activity in minutes × (MET × 3.5 × your weight in kg) / 200 = Total calories burned.
+ // Duration of physical activity in minutes × (MET × 3.5 × your weight in kg) / 200 = Total calories burned.
   // METs for jogging/running and swimming = 7
   // METs for cycling = 5
-  } else {
-
-  }
+ 
   try {
     const exerciseData = await Exercise.create({
       distance: req.body.distance,
@@ -50,55 +45,55 @@ router.post('/', async (req, res) => {
 
 });
 
-// router.get('/:id', async (req, res) => {
-//   // find one category by its `id` value
-//   // be sure to include its associated Products
-//   try {
-//     const categoryData = await Category.findByPk(req.params.id, {
-//       //include is going to make the join 
-//       include: [{ model: Product }],
-//     });
+//get one exercise by exercise id 
+// will be useful for displaying exercise history
+router.get('/:id', async (req, res) => {
+  try {
+    const exerciseData = await Exercise.findByPk(req.params.id, {
+      include: [{ model: User }, { model: Activity }],
+    });
 
-//     if (!categoryData) {
-//       res.status(404).json({ message: 'No category found with that id!' });
-//       return;
-//     }
+    if (!exerciseData) {
+      res.status(404).json({ message: 'No exercise found with that id!' });
+      return;
+    }
 
-//     res.status(200).json(categoryData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.status(200).json(exerciseData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// router.put('/:id', async (req, res) => {
-//   // update a category by its `id` value
-//   try {
-//     const userData = await Category.update(req.body, {
-//       where: {
-//         id: req.params.id,
-//       },
-//     });
-//     if (!userData[0]) {
-//       res.status(404).json({ message: 'No user with this id!' });
-//       return;
-//     }
-//     res.status(200).json(userData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+// update a exercise by its `id` value
+// TO DO: need to make sure the update gets updated and is NOT returned as a string
+router.put('/:id', async (req, res) => {
+  try {
+    const exerciseData = await Exercise.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (!exerciseData[0]) {
+      res.status(404).json({ message: 'No exercise session with this id!' });
+      return;
+    }
+    res.status(200).json(exerciseData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// router.delete('/:id', (req, res) => {
-//   // delete a category by its `id` value
-//   Category.destroy({
-//     where: {
-//       id: req.params.id,
-//     },
-//   })
-//     .then((deletedCategory) => {
-//       res.json(deletedCategory);
-//     })
-//     .catch((err) => res.json(err));
-// });
+//delete an exericse by its `id` value 
+router.delete('/:id', (req, res) => {
+  Exercise.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((deletedExercise) => {
+      res.json(deletedExercise);
+    })
+    .catch((err) => res.json(err));
+});
 
 module.exports = router;
