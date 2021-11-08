@@ -44,7 +44,6 @@ Exercise.belongsTo(User, {
 //   foreignKey: 'exercise_id',
 // });
 
-//rewritten so routes work 
 Exercise.belongsTo(Activity, {
   foreignKey: 'activity_id',
   onDelete: 'CASCADE',
