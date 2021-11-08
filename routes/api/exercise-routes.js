@@ -24,20 +24,27 @@ router.post('/', async (req, res) => {
 //     "user_id": 3,
 // },
 
-// insert in metequation
-
  // Duration of physical activity in minutes × (MET × 3.5 × your weight in kg) / 200 = Total calories burned.
   // METs for jogging/running and swimming = 7
   // METs for cycling = 5
  
   try {
-    const exerciseData = await Exercise.create({
+    let exerciseData = await Exercise.create({
       distance: req.body.distance,
       duration: req.body.duration,
-      calories_burned: req.body.calories_burned, //NEED TO PUT THE EQUATION IN
       activity_id: req.body.activity_id, //need to make this responsive w/ frontend dropdown input
       user_id: req.body.user_id //NEED TO INPUT USER ID BASED ON AUTH
     });
+
+    //NEED TO INPUT USER WEIGHT BASED ON USER ID. this needs to be replaced with a call with the user's weight.
+    const user_weight = 68;
+
+    if (exerciseData['activity_id'] === 1 || exerciseData['activity_id'] === 3) {
+      exerciseData['calories_burned'] = exerciseData['duration'] * (7 * 3.5 * user_weight ) / 200
+    } else if (exerciseData['activity_id'] === 2){
+      exerciseData['calories_burned'] = exerciseData['duration'] * (5 * 3.5 * user_weight ) / 200
+    } 
+     
     res.status(200).json(exerciseData);
   } catch (err) {
     res.status(400).json(err);
