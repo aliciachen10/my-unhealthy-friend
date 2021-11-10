@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const { unsubscribe } = require('.');
 const { Exercise, User, Activity, Category, Preference } = require('../../models');
+const bcrypt = require('bcrypt');
 
 // The `/api/users` endpoint
 
@@ -10,9 +12,13 @@ router.get('/', async (req, res) => {
       include: [{ model: Exercise }, { model: Category }],
     });
     res.status(200).json(userData);
+    const users = userData.map((user) => user.get({ plain: true }));
+    console.log(users)
+    res.render('users', { users })
   } catch (err) {
     res.status(500).json(err);
   }
+  
 });
 
 //create a new user
@@ -24,11 +30,17 @@ router.post('/', async (req, res) => {
   //   "weight": 175
 // }
   try {
+
+    const newUser = req.body
+    newUser.password = await bcrypt.hash(req.body.password, 10);
+
     const userData = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       height: req.body.height,
-      weight: req.body.weight
+      weight: req.body.weight,
+      email: req.body.email,
+      password: req.body.password 
     });
     res.status(200).json(userData);
   } catch (err) {
@@ -49,8 +61,9 @@ router.get('/:id', async (req, res) => {
       res.status(404).json({ message: 'No user found with that id!' });
       return;
     }
-
-    res.status(200).json(userData);
+    const user = userData.get({ plain: true});
+    console.log(user)
+    res.render('user', user);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -80,15 +93,51 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   // delete on tag by its `id` value
-  Tag.destroy({
+  User.destroy({
     where: {
       id: req.params.id,
     },
   })
-    .then((deletedTag) => {
-      res.json(deletedTag);
+    .then((deletedUser) => {
+      res.json(deletedUser);
     })
     .catch((err) => res.json(err));
+});
+
+
+router.post('/login', async (req, res) => {
+  try {
+    // we search the DB for a user with the provided email
+    const userData = await User.findOne({ where: { email: req.body.email } });
+    console.log(userData)
+    if (!userData) {
+      // the error message shouldn't specify if the login failed because of wrong email or password
+      //I put 1 before login so we know which one is failing
+      res.status(404).json({ message: '1Login failed. Please try again!' });
+      return;
+    }
+    // use `bcrypt.compare()` to compare the provided password and the hashed password
+    //I don't think the below compare is working because the passwords are the same but we still
+    // get the next error message
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      userData.password
+    );
+    console.log(req.body.password)
+    console.log(userData.password)
+    console.log(validPassword)
+    //I'm getting valid password as false when they are the same. Use insomonia and use the consolelogs above
+    //to see what I'm talking about here. 
+    // if they do not match, return error message
+    if (!validPassword) {
+      res.status(400).json({ message: '2Login failed. Please try again!' });
+      return;
+    }
+    // if they do match, return success message
+    res.status(200).json({ message: 'You are now logged in!' });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;

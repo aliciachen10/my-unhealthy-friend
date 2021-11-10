@@ -1,0 +1,24 @@
+<div class="all-user-container">
+  <div class="card-header col-md-10">
+    {{#each exercises as |exercise|}}
+    <h2>
+     All User Data
+     {{exercise.id}}
+    </h2>
+    {{/each}}
+  </div>
+  <!-- For each dish in the array of dish objects, the following <div> will be rendered. -->
+  {{#each users as |user|}}
+    <div class="User col-md-5">
+      <!-- We use dish.id instead of <od> and <li> elements. -->
+      <p>
+        {{user.id}}.
+        {{user.firstName}}
+       
+      </p>
+    </div>
+    <div class="col-md-7">
+      <p></p>
+    </div>
+  {{/each}}
+</div>
