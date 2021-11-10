@@ -6,7 +6,7 @@ const { Exercise, User, Activity, Category, Preference } = require('../../models
 router.get('/', async (req, res) => {
   try {
     const preferenceData = await Preference.findAll({
-      include: [{ model: User }],
+      // include: [{ model: User }],
     });
     res.status(200).json(preferenceData);
   } catch (err) {
