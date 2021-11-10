@@ -80,13 +80,13 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   // delete on tag by its `id` value
-  Tag.destroy({
+  User.destroy({
     where: {
       id: req.params.id,
     },
   })
-    .then((deletedTag) => {
-      res.json(deletedTag);
+    .then((deletedUser) => {
+      res.json(deletedUser);
     })
     .catch((err) => res.json(err));
 });
