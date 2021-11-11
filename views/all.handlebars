@@ -1,0 +1,87 @@
+<div class="menu-container">
+  <div class="card-header col-md-12 text-center">
+    <h2>
+      &#127869 Current Menu
+    </h2>
+  </div>
+  {{#each exercises as |exercise|}}
+    <div class="exercise col-md-4">
+      <p>ID: {{exercise.id}}.</p>
+      <p>Distance: {{exercise.distance}}</p>
+      <p>Duration: {{exercise.duration}}</p>
+      <p>Calories burned: {{exercise.calories_burned}}</p>
+      <p>When you did it: {{exercise.createdAt}}</p>
+      <br />
+    </div>
+    <div class="col-md-5">
+      <p>
+        {{!-- {{exercise.guest_name}} --}}
+      </p>
+    </div>
+    <div class="col-md-3">
+      {{!-- 🥜: {{#if exercise.has_nuts}} Contains nuts {{else}} No nuts {{/if}} --}}
+    </div>
+  {{/each}}
+  <!-- This is the form for adding a new exercise -->
+  <div class="add-exercise-container">
+    <h2>
+      Log your exercise here:
+    </h2>
+    <form class="new-exercise-form">
+
+      <label for="exercise-type">Choose an exercise type:</label>
+      <select name="exercise-type" id="exercise-type">
+        <option value="running">Running</option>
+        <option value="swimming">Swimming</option>
+        <option value="cycling">Cycling</option>
+      </select>
+      <br />
+      <label for="distance">
+        exercise distance (in miles):
+      </label>
+      <textarea
+        id="distance"
+        name="distance"
+        rows="1"
+        cols="10"
+      ></textarea>
+      <label for="duration">
+        exercise duration (in minutes):
+      </label>
+      <textarea
+        id="duration"
+        name="duration"
+        rows="1"
+        cols="10"
+      ></textarea>
+      <br />
+      <label for="weight">
+        Current weight (in kg):
+      </label>
+      <br />
+      <textarea
+        id="weight"
+        name="weight"
+        rows="1"
+        cols="10"
+      ></textarea>
+      <br />
+      <br />
+      {{!-- <br />
+      {{#if has_nuts}}
+        <input type="checkbox" id="has_nuts" name="has_nuts" checked />
+      {{else}}
+        <input type="checkbox" id="has_nuts" name="has_nuts" />
+      {{/if}}
+      <label for="has_nuts">
+        Check box if this exercise contains nuts
+      </label> --}}
+      <br />
+      <button type="submit" value="Submit">
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="/js/add-exercise.js"></script>

@@ -13,13 +13,45 @@ router.get('/', async (req, res) => {
     });
     res.status(200).json(userData);
     const users = userData.map((user) => user.get({ plain: true }));
-    console.log(users)
+    console.log("here are users ", users)
     res.render('users', { users })
   } catch (err) {
     res.status(500).json(err);
   }
   
 });
+
+router.get('/exercises', async (req, res) => {
+  try {
+    const userData = await User.findAll({
+      include: [{ model: Exercise }, { model: Category }],
+    });
+    res.status(200).json(userData);
+    const users = userData.map((user) => user.get({ plain: true }));
+    console.log("here are users ", users)
+    res.render('users', { users })
+  } catch (err) {
+    res.status(500).json(err);
+  }
+  
+});
+
+//get all users, with their exercises and preferences
+// router.get('/exercises', async (req, res) => {
+//   try {
+//     const exerciseData = await Exercise.findAll({
+//       // include: [{ model: User }, { model: Activity }],
+//     });
+//     console.log("myexercisedata >>>>", exerciseData)
+//     // res.status(200).json(userData);
+//     const exercise = exerciseData.map((exercise) => exercise.get({ plain: true }));
+//     console.log("here are exercises ", exercise)
+//     // res.render('all', { exercise })
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+  
+// });
 
 //create a new user
 router.post('/', async (req, res) => {

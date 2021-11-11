@@ -5,6 +5,7 @@ const userRoutes = require('./user-routes');
 const activityRoutes = require('./activity-routes');
 const categoryRoutes = require('./category-routes');
 
+
 router.use('/exercises', exerciseRoutes);
 router.use('/preferences', preferenceRoutes);
 router.use('/users', userRoutes);
