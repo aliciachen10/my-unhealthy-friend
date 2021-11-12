@@ -23,7 +23,7 @@ Exercise.init(
         calories_burned: {
             type: DataTypes.INTEGER,
         },
-
+//this was changed
         activity_id: { 
             type: DataTypes.INTEGER,
             references: {

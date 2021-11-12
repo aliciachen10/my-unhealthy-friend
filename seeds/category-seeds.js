@@ -3,28 +3,28 @@ const { Category } = require('../models')
 const categoryData = [
 
 {
-    category_name: 'Italian',
+    category_name: 'italian',
 },
 {
-    category_name: 'Chinese',
+    category_name: 'chinese',
 },
 {
-    category_name: 'French',
+    category_name: 'french',
 },
 {
-    category_name: 'American',
+    category_name: 'american',
 },
 {
-    category_name: 'Indian',
+    category_name: 'indian',
 },
 {
-    category_name: 'Fast Food',
+    category_name: 'fast food',
 },
 {
-    category_name: 'Mexican',
+    category_name: 'mexican',
 },
 {
-    category_name: 'Thai',
+    category_name: 'thai',
 },
 
 ];
