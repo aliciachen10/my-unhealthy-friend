@@ -107,11 +107,13 @@ router.put('/:id', async (req, res) => {
 //   {
 //     "weight": 180
 // }
+console.log(req.body)
   try {
     const userData = await User.update(req.body, {
       where: {
         id: req.params.id,
       },
+      individualHooks: true //magic bullet
     });
     if (!userData[0]) {
       res.status(404).json({ message: 'No user with this id!' });

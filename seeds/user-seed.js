@@ -49,7 +49,8 @@ const userData = [
 },
 ];
 
-const seedUser = () => User.bulkCreate(userData);
+//add this to encrypt passwords
+const seedUser = () => User.bulkCreate(userData, {individualHooks: true, returning: true});
 
 
 module.exports = seedUser
