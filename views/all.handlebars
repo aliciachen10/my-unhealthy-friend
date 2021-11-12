@@ -1,29 +1,20 @@
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+  crossorigin="anonymous"
+/>
+<link href="../public/css/style.css" rel="stylesheet" />
 <div class="menu-container">
+
   <div class="card-header col-md-12 text-center">
     <h2>
-      &#127869 Current Menu
+      🏋️ Exercise History
     </h2>
   </div>
-  {{#each exercises as |exercise|}}
-    <div class="exercise col-md-4">
-      <p>ID: {{exercise.id}}.</p>
-      <p>Distance: {{exercise.distance}}</p>
-      <p>Duration: {{exercise.duration}}</p>
-      <p>Calories burned: {{exercise.calories_burned}}</p>
-      <p>When you did it: {{exercise.createdAt}}</p>
-      <br />
-    </div>
-    <div class="col-md-5">
-      <p>
-        {{!-- {{exercise.guest_name}} --}}
-      </p>
-    </div>
-    <div class="col-md-3">
-      {{!-- 🥜: {{#if exercise.has_nuts}} Contains nuts {{else}} No nuts {{/if}} --}}
-    </div>
-  {{/each}}
+
   <!-- This is the form for adding a new exercise -->
-  <div class="add-exercise-container">
+  <div class="card add-exercise-container col-md-4">
     <h2>
       Log your exercise here:
     </h2>
@@ -39,32 +30,17 @@
       <label for="distance">
         exercise distance (in miles):
       </label>
-      <textarea
-        id="distance"
-        name="distance"
-        rows="1"
-        cols="10"
-      ></textarea>
+      <textarea id="distance" name="distance" rows="1" cols="10"></textarea>
       <label for="duration">
         exercise duration (in minutes):
       </label>
-      <textarea
-        id="duration"
-        name="duration"
-        rows="1"
-        cols="10"
-      ></textarea>
+      <textarea id="duration" name="duration" rows="1" cols="10"></textarea>
       <br />
       <label for="weight">
         Current weight (in kg):
       </label>
       <br />
-      <textarea
-        id="weight"
-        name="weight"
-        rows="1"
-        cols="10"
-      ></textarea>
+      <textarea id="weight" name="weight" rows="1" cols="10"></textarea>
       <br />
       <br />
       {{!-- <br />
@@ -77,11 +53,45 @@
         Check box if this exercise contains nuts
       </label> --}}
       <br />
-      <button type="submit" value="Submit">
+      <button type="submit" value="Submit" class="btn btn-primary">
         Submit
       </button>
     </form>
   </div>
 </div>
+
+{{#each exercises as |exercise|}}
+<div>
+  <script>console.log(exercise)</script>
+</div>
+  <div class="card exercise col-md-4">
+    {{! <img
+          src="https://c.ndtvimg.com/2020-08/dtm9edd8_cycling_625x300_05_August_20.jpg"
+        /> }}
+    <div class="card-content">
+      <h4 class="card-title">
+        <a href="http://aliciachen10.github.io/weather-dashboard">
+          Activity
+        </a>
+      </h4>
+      <p class="">
+        {{!-- <p>ID: {{exercise.id}}.</p> --}}
+        <p>Distance: {{exercise.distance}} miles</p>
+        <p>Duration: {{exercise.duration}} minutes</p>
+        <p>Calories burned: {{exercise.calories_burned}} kCal</p>
+        <p>When you did it: {{exercise.createdAt}}</p>
+      </p>
+    </div>
+    <div class="card-read-more">
+      <a
+        href="http://github.com/aliciachen10/weather-dashboard"
+        class="btn btn-link btn-block"
+      >
+        Get suggestions
+      </a>
+    </div>
+  </div>
+
+{{/each}}
 
 <script src="/js/add-exercise.js"></script>
