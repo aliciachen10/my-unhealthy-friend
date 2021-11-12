@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const got = require('got');
 const { unsubscribe } = require('./api');
 const { Exercise, User, Activity, Category, Preference } = require('../models');
 const bcrypt = require('bcrypt');

@@ -101,7 +101,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// update a user's weight by a user's `id` value
+// update user values by user id value 
 router.put('/:id', async (req, res) => {
   //request format below to update id = 1, Andy Alexander from 175 --> 180 pounds 
 //   {
@@ -120,6 +120,61 @@ console.log(req.body)
       return;
     }
     res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//get preferences by user
+router.get('/:user_id/preferences', async (req, res) => {
+  // find a user tag by its `id`
+  // be sure to include its associated exercise and preference data
+  try {
+    const userData = await Preference.findAll( //to do: need to change this to findAll 
+      {
+        // Gets the book based on the isbn given in the request parameters
+        where: { 
+          user_id: req.params.user_id 
+        },
+      }
+    )
+
+    if (!userData) {
+      res.status(404).json({ message: 'No user found with that id!' });
+      return;
+    }
+    // const user = userData.get({ plain: true});
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//get all exercises by user id
+router.get('/:user_id/exercises', async (req, res) => {
+  // find a user tag by its `id`
+  // be sure to include its associated exercise and preference data
+  try {
+    Exercise.findAll({ 
+          where: { 
+            user_id: req.params.user_id 
+          }
+        }).then(response => res.status(200).json(response))
+    // const userData = await Exercise.findAll( //to do: need to change this to findAll
+    //   // {
+    //     // Gets the book based on the isbn given in the request parameters
+    //     // where: { 
+    //     //   user_id: req.params.user_id 
+    //     // },
+    //   // }
+    // )
+
+    // if (!userData) {
+    //   res.status(404).json({ message: 'No user found with that id!' });
+    //   return;
+    // }
+    // const user = userData.get({ plain: true});
+    // res.status(200).json(userData);
   } catch (err) {
     res.status(500).json(err);
   }
