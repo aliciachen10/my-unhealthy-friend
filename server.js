@@ -14,10 +14,10 @@ const PORT = process.env.PORT || 3001;
 
 
 const sess = {
-  secret: 'Super secret secret',
+  secret: process.env.SESSION_SECRET,
   cookie: {},
-  resave: false,
-  saveUninitialized: true,
+  resave: false, // Alper touched on resave and saveUnitlialized by I don't really understand
+  saveUninitialized: false,
   store: new SequelizeStore({
     db: sequelize
   })

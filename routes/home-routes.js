@@ -13,11 +13,36 @@ router.get('/', async (req, res) => {
     });
     // res.status(200).json(exerciseData);
     const exercises = exerciseData.map((exercise) => exercise.get({ plain: true }));
-    res.render('all', { exercises })
+    res.render('all', { exercises,
+      loggedIn: req.session.loggedIn
+     })
   } catch (err) {
     res.status(500).json(err);
   }
   
 });
+
+// Login route
+router.get('/login', (req, res) => {
+  // If the user is already logged in, redirect to the homepage
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  // Otherwise, render the 'login' template
+  res.render('login');
+});
+
+//logout route
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
+
 
 module.exports = router;

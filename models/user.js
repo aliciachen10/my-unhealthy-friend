@@ -3,7 +3,13 @@ const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 const bcrypt = require('bcrypt');
 
-class User extends Model {}
+class User extends Model {
+  checkPassword(loginPw) {
+    return bcrypt.compareSync(loginPw, this.password);
+  }
+}; //I would like an explanation of what this is doing specifically. 
+//appears to check password of the login request with the password of the 
+//database BUT i'd still like to get walked through everything that happens here.
 
 
 User.init( 

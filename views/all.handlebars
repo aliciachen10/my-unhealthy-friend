@@ -5,6 +5,8 @@
   crossorigin="anonymous"
 />
 <link href="../public/css/style.css" rel="stylesheet" />
+
+ {{#if loggedIn}}
 <div class="menu-container">
 
   <div class="card-header col-md-12 text-center">
@@ -93,5 +95,7 @@
   </div>
 
 {{/each}}
-
+{{else}}
+<a href="/login">You must login first to view this page</a>
+{{/if}}
 <script src="/js/add-exercise.js"></script>

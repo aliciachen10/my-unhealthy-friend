@@ -11,10 +11,11 @@ router.get('/', async (req, res) => {
     const userData = await User.findAll({
       include: [{ model: Exercise }, { model: Category }],
     });
-    res.status(200).json(userData);
+    // res.status(200).json(userData);
     const users = userData.map((user) => user.get({ plain: true }));
     console.log("here are users ", users)
-    res.render('users', { users })
+    res.render('users', { users });
+    console.log(req.session.loggedIn)
   } catch (err) {
     res.status(500).json(err);
   }
@@ -29,29 +30,13 @@ router.get('/exercises', async (req, res) => {
     res.status(200).json(userData);
     const users = userData.map((user) => user.get({ plain: true }));
     console.log("here are users ", users)
-    res.render('users', { users })
+    res.render('users', { users});
   } catch (err) {
     res.status(500).json(err);
   }
   
 });
 
-//get all users, with their exercises and preferences
-// router.get('/exercises', async (req, res) => {
-//   try {
-//     const exerciseData = await Exercise.findAll({
-//       // include: [{ model: User }, { model: Activity }],
-//     });
-//     console.log("myexercisedata >>>>", exerciseData)
-//     // res.status(200).json(userData);
-//     const exercise = exerciseData.map((exercise) => exercise.get({ plain: true }));
-//     console.log("here are exercises ", exercise)
-//     // res.render('all', { exercise })
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-  
-// });
 
 //create a new user
 router.post('/', async (req, res) => {
@@ -74,6 +59,11 @@ router.post('/', async (req, res) => {
       email: req.body.email,
       password: req.body.password 
     });
+    //adding req.session.save variable when new user is created
+    //when created loggedIn value set to true.
+    req.session.save(() => {
+      req.session.loggedIn = true;
+    });
     res.status(200).json(userData);
   } catch (err) {
     res.status(400).json(err);
@@ -95,7 +85,7 @@ router.get('/:id', async (req, res) => {
     }
     const user = userData.get({ plain: true});
     console.log(user)
-    res.render('user', user);
+    res.render('user', {user});
   } catch (err) {
     res.status(500).json(err);
   }
@@ -141,37 +131,33 @@ router.delete('/:id', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
-    // we search the DB for a user with the provided email
     const userData = await User.findOne({ where: { email: req.body.email } });
     console.log(userData)
     if (!userData) {
-      // the error message shouldn't specify if the login failed because of wrong email or password
-      //I put 1 before login so we know which one is failing
+      
       res.status(404).json({ message: '1Login failed. Please try again!' });
       return;
     }
-    // use `bcrypt.compare()` to compare the provided password and the hashed password
-    //I don't think the below compare is working because the passwords are the same but we still
-    // get the next error message
+  
     const validPassword = await bcrypt.compare(
       req.body.password,
       userData.password
     );
-    console.log(req.body.password)
-    console.log(userData.password)
-    console.log(validPassword)
-    //I'm getting valid password as false when they are the same. Use insomonia and use the consolelogs above
-    //to see what I'm talking about here. 
-    // if they do not match, return error message
+  
     if (!validPassword) {
       res.status(400).json({ message: '2Login failed. Please try again!' });
       return;
     }
-    // if they do match, return success message
-    res.status(200).json({ message: 'You are now logged in!' });
+    req.session.save(() => {
+      req.session.loggedIn = true;
+   
+    console.log("<<<<<<< This is to test true/false of req.session.loggedIN >>>>>>> " + req.session.loggedIn)
+    res.status(200).json({ message: 'You are now logged in!' })
+  });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
 
 module.exports = router;
