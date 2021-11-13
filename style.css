@@ -17,10 +17,19 @@ body, html {
 .card-row {
     padding-top: 5%;
     justify-content: center;
+  padding-top: 2%;
+}
+
+.card1 {
+  margin: 1%;
+}
+
+.card-row {
+  justify-content: center;
 }
 
 .login-input {
-    margin: 1%;
+  margin: 1%;
 }
 
 .food-categories {
@@ -35,8 +44,18 @@ body, html {
 
 .btn-modal {
     margin: 1%;
+  display: flex;
+  margin: 1%;
+  padding: 1%;
 }
 
+.food {
+  padding-right: 2%;
+}
+
+.btn-modal {
+  margin: 0.5%;
+}
 
 .card-outline {
 padding: 5%;
@@ -48,4 +67,12 @@ border: solid grey 2px;
     display:flex;
     justify-content: center;
     margin-bottom: 1%;
+}
+  border: solid grey 1px;
+}
+
+.submit-activity {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1%;
 }
