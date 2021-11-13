@@ -9,14 +9,15 @@ const {
   Category,
   Preference,
 } = require("../../models");
+const { Console } = require("console");
 
 //working function
 async function edamamData(calories_burned, preference) {
+
   try { //use an await on the get request and an await on the response 
 
     const calories_burned_rounded = Math.round(Math.floor(calories_burned));
-    console.log("calories burned>>>", calories_burned_rounded)
-    console.log("preference>>>>", preference)
+
     const response = await got(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=90e521d5fd7b9f2ee89888aaa573e898&ingr=${preference}&nutrition-type=cooking&category=fast-foods&calories=${calories_burned_rounded}`, { responseType: 'json'});
     // const response = await got(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=90e521d5fd7b9f2ee89888aaa573e898&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=500`, { responseType: 'json'});
     const result = await response;
@@ -76,6 +77,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+
   // create a new exercise. creating happens in this format:
   //   {
   //     "distance": 4.6,
@@ -108,6 +110,7 @@ router.post("/", async (req, res) => {
       calories_burned,
       user_id: req.body.user_id, //NEED TO INPUT USER ID BASED ON AUTH
     });
+
 
     // const { activities } = req.body;
     // const preferences = await User.find() **this is whatever you do to get the preferences
@@ -153,9 +156,9 @@ router.post("/", async (req, res) => {
     // const userReccomendations = recommendations.map(r => ({ calories: r.calories, fat: r.fat, ingredients: r.ingredients }));
     // res.render('whateveryourviewisnamed', userRecommendations);
     // res.status(200).json(getEdamamData(500));
-
-    res.status(200).json(exerciseData.dataValues);
-    res.render("all", { exercises: exerciseData.dataValues, recommendations: userRecommendations });
+    // res.status(200).json(userRecommendations);
+    res.status(200).json({exercises: exerciseData.dataValues, recommendations: userRecommendations});
+    // res.render("all", { exercises: exerciseData.dataValues, recommendations: userRecommendations });
 
   } catch (err) {
     res.status(400).json(err);

@@ -13,9 +13,9 @@ router.get('/', async (req, res) => {
     });
     // res.status(200).json(userData);
     const users = userData.map((user) => user.get({ plain: true }));
-    console.log("here are users ", users)
+    // console.log("here are users ", users)
     res.render('users', { users });
-    console.log(req.session.loggedIn)
+    // console.log(req.session.loggedIn)
   } catch (err) {
     res.status(500).json(err);
   }
@@ -29,7 +29,7 @@ router.get('/exercises', async (req, res) => {
     });
     res.status(200).json(userData);
     const users = userData.map((user) => user.get({ plain: true }));
-    console.log("here are users ", users)
+    // console.log("here are users ", users)
     res.render('users', { users});
   } catch (err) {
     res.status(500).json(err);
@@ -84,7 +84,7 @@ router.get('/:id', async (req, res) => {
       return;
     }
     const user = userData.get({ plain: true});
-    console.log(user)
+    // console.log(user)
     res.render('user', {user});
   } catch (err) {
     res.status(500).json(err);
@@ -97,7 +97,6 @@ router.put('/:id', async (req, res) => {
 //   {
 //     "weight": 180
 // }
-console.log(req.body)
   try {
     const userData = await User.update(req.body, {
       where: {
@@ -187,7 +186,6 @@ router.delete('/:id', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
-    console.log(userData)
     if (!userData) {
       
       res.status(404).json({ message: '1Login failed. Please try again!' });
