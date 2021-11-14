@@ -67,8 +67,7 @@ border: solid grey 2px;
     display:flex;
     justify-content: center;
     margin-bottom: 1%;
-}
-  border: solid grey 1px;
+    border: solid grey 1px;
 }
 
 .submit-activity {
