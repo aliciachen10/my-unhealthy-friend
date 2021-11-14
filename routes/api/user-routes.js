@@ -150,7 +150,7 @@ router.get('/:user_id/preferences', async (req, res) => {
   }
 });
 
-//get all exercises by user id
+//get all exercises by user id -- this what will display the exercise history for each user! 
 router.get('/:user_id/exercises', async (req, res) => {
   // find a user tag by its `id`
   // be sure to include its associated exercise and preference data

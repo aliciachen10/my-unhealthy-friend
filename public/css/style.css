@@ -1,5 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
 
+.weather-image {
+  display:inline;
+  width: 100px;
+  height: 100px;
+}
+
 html,
 body {
   -moz-box-sizing: border-box;
@@ -50,6 +56,8 @@ h1.heading {
     margin: 0 0 0.3em;
   }
 } 
+
+
 .card {
   display: block; 
     margin-bottom: 20px;
