@@ -4,8 +4,11 @@ async function newFormHandler(event) {
   const duration = document.querySelector("#duration").value;
   const weight = document.querySelector("#weight").value;
   const exercise_type = document.querySelector("#exercise-type").value;
+
   let activity_id;
 
+  const user_id = 2;
+  
   if (exercise_type === "running") {
     activity_id = 1;
   } else if (exercise_type === "cycling") {
@@ -13,9 +16,6 @@ async function newFormHandler(event) {
   } else if (exercise_type === "swimming") {
     activity_id = 3;
   }
-
-  //need to change this value so it's not hardcoded and responsive to user
-  const user_id = 1;
 
   const response = await fetch(`/api/exercises`, {
     method: "POST",
@@ -108,6 +108,7 @@ async function newFormHandler(event) {
         </a>
       </h4>
       <p class="">
+        <p>ID: ${exercise.user_id}</p>
         <p>Distance: ${exercise.distance} miles</p>
         <p>Duration: ${exercise.duration} minutes</p>
         <p>Calories burned: ${exercise.calories_burned} kCal</p>

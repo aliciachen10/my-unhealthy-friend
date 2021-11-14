@@ -75,14 +75,23 @@ router.post("/", async (req, res) => {
     let exerciseData = await Exercise.create({
       distance: req.body.distance,
       duration: req.body.duration,
-      activity_id: req.body.activity_id, //need to make this responsive w/ frontend dropdown input
+      activity_id: req.body.activity_id, 
       calories_burned,
-      user_id: req.session.user_id, //NEED TO INPUT USER ID BASED ON AUTH
+      user_id: req.session.user_id, 
     });
-    console.log("user id", req.session.user_id)
-    const preference = 'chinese';
-    const myRecommendation = await edamamData(calories_burned, preference);
-    res.status(200).json({exercises: exerciseData.dataValues, recommendations: myRecommendation});
+
+    //get an array of string preferences from req.session.preferences 
+    //preference_array should return an array that looks like this: ['italian', 'chinese', 'american', 'mexican']
+    let preference_array = [];
+    req.session.preferences.forEach(entry => preference_array.push(entry.category_name))
+    console.log(preference_array)
+
+    //get a random entry from the user preference array 
+    let chooseRandomPreference = Math.floor(Math.random() * preference_array.length);
+
+    //pass the calories burned and the random preference to the get edamamData function
+    const myRecommendation = await edamamData(calories_burned, preference_array[chooseRandomPreference]);
+    res.status(200).json({exercises: exerciseData.dataValues, recommendations: myRecommendation, user_id: req.session.user_id});
     
   } catch (err) {
     res.status(400).json(err);
