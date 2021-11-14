@@ -18,9 +18,7 @@ async function edamamData(calories_burned, preference) {
 
     const calories_burned_rounded = Math.round(Math.floor(calories_burned));
     const response = await got(`https://api.edamam.com/api/recipes/v2?type=public&q=${preference}&app_id=ae9304a1&app_key=1a636d7810dc05429f16a21db43490f2&calories=${calories_burned_rounded}`, { responseType: 'json'});
-    // const response = await got(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=90e521d5fd7b9f2ee89888aaa573e898&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=500`, { responseType: 'json'});
     const result = await response;
-    // let recipe_dict = [];
     let recipe_dict = []
     for (i = 0; i < result.body.hits.length; i++) {
       let single_recipe = {};
@@ -36,25 +34,6 @@ async function edamamData(calories_burned, preference) {
     console.log(error)
   }
 };
-
-function edamamv2() {https.get('https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=90e521d5fd7b9f2ee89888aaa573e898&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=500', (resp) => {
-  let data = '';
-
-  // A chunk of data has been received.
-  resp.on('data', (chunk) => {
-    data += chunk;
-  });
-
-  // The whole response has been received. Print out the result.
-  return resp.on('end', () => {
-    const foodSuggestion = JSON.parse(data)['hints'][0]['food']['label']
-    return foodSuggestion;
-    
-  });
-
-}).on("error", (err) => {
-  console.log("Error: " + err.message);
-});}
 
 // The `/api/exercises` endpoint
 
@@ -137,7 +116,7 @@ router.get('/user/:user_id', async (req, res) => {
 });
 
 async function getEdamamData(calories) {
-  const response = await fetch(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=90e521d5fd7b9f2ee89888aaa573e898&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=${calories}`)
+  const response = await fetch(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=${PROCESS.ENV.EDAMAM_API_KEY}&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=${calories}`)
   const recommendations = await response.json();
 }
 

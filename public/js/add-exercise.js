@@ -42,7 +42,7 @@ async function newFormHandler(event) {
   console.log(final_recommendations)
   var cardDiv = {};
   var cardDate = {};
-  
+
   //clear the html of the recommendation_div
   recommendation_div.innerHTML = "";
   //display how many calories a user has burned
