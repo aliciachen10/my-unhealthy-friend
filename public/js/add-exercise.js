@@ -7,8 +7,8 @@ async function newFormHandler(event) {
 
   let activity_id;
 
-  const user_id = 2;
-
+  // const user_id = 2;
+  const user_id = window.userId;
   if (exercise_type === "running") {
     activity_id = 1;
   } else if (exercise_type === "cycling") {
@@ -39,7 +39,6 @@ async function newFormHandler(event) {
       final_recommendations.push(formattedResponse.recommendations[i])
     }
   }
-  console.log(final_recommendations)
   var cardDiv = {};
   var cardDate = {};
 
@@ -96,8 +95,6 @@ async function newFormHandler(event) {
     },
   });
   const formattedActivityResponse = await activity_response.json();
-
-  console.log(formattedActivityResponse)
 
   formattedActivityResponse.forEach(exercise => {
     const card = `<div class="card exercise col-md-4">

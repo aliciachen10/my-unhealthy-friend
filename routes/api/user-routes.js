@@ -14,7 +14,6 @@ const withAuth = require('../../utils/auth');
 //     });
 //     // res.status(200).json(userData);
 //     const users = userData.map((user) => user.get({ plain: true }));
-//     // console.log("here are users ", users)
 //     // res.render('users', { users });
 //     res.status(200).json(userData)
 //     // console.log(req.session.loggedIn)
@@ -34,8 +33,6 @@ router.get('/', async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-    console.log(">>>>>>user below<<<<<<<<<*****************")
-    console.log(req.session.user_id)
     res.render('all', {
       ...user,
       logged_in: true
@@ -52,7 +49,6 @@ router.get('/exercises', async (req, res) => {
     });
     res.status(200).json(userData);
     const users = userData.map((user) => user.get({ plain: true }));
-    // console.log("here are users ", users)
     res.render('users', { users});
   } catch (err) {
     res.status(500).json(err);
@@ -63,7 +59,6 @@ router.get('/exercises', async (req, res) => {
 
 //create a new user
 router.post('/', async (req, res) => {
-  console.log('>>>>Does create user work?')
   // {
   //   "firstName": "Andy",
   //   "lastName": "Alexander",
@@ -245,7 +240,6 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  console.log(">>>> is logout working?")
   if (req.session.loggedIn) {
     req.session.destroy(() => {
       res.status(204).end();

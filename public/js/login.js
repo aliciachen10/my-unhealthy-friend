@@ -24,7 +24,6 @@ if (email && password) {
 
 const signupFormHandler = async (event) => {
     event.preventDefault();
-    console.log(">>>>> Is this running?")
     
     const firstName = document.querySelector('#first-name-signup').value.trim();
     const lastName = document.querySelector('#last-name-signup').value.trim();

@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
       },
     });
     // res.status(200).json(exerciseData);
-    const exercises = exerciseData.map((exercise) => exercise.get({ plain: true }));
+    const exercises = exerciseData.map((exercise) => exercise.get({ plain: true })).reverse();
     res.render('all', { exercises,
       loggedIn: req.session.loggedIn,
       user_id: req.session.user_id
@@ -26,6 +26,10 @@ router.get('/', async (req, res) => {
   }
   
 });
+
+// sentencesList: function() {
+//   return Session.get(SENTENCES).reverse();
+// }
 
 // Login route
 router.get('/login', (req, res) => {
