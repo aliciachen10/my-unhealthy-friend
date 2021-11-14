@@ -10,6 +10,7 @@ const {
   Preference,
 } = require("../../models");
 const { Console } = require("console");
+const withAuth = require('../../utils/auth');
 
 //working function
 async function edamamData(calories_burned, preference) {
@@ -49,7 +50,6 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-
   // create a new exercise. creating happens in this format:
   //   {
   //     "distance": 4.6,
@@ -63,16 +63,13 @@ router.post("/", async (req, res) => {
   // METs for jogging/running and swimming = 7
   // METs for cycling = 5
 
-  //NEED TO INPUT USER WEIGHT BASED ON USER ID. this needs to be replaced with a call with the user's weight.
-  const user_weight = 68;
   try {
-    let calories_burned; //ADD SESSIONS IN ORDER TO GET THE USERWEIGHT INSTEAD OF HAVING IT BE HARDCODED
-    //DON'T ADD TOO MANY PROPERTIES TO CURRENTUSER
-    //REQ.SESSION.CURRENTUSER (DEFINE THE PROPERTIES FOR CURRENT USER CURRENTUSER.USERWEIGHT) --> USERWEIGHT
+    let calories_burned; 
+
     if (req.body.activity_id === 1 || req.body.activity_id === 3) {
-      calories_burned = (req.body.duration * (7 * 3.5 * user_weight)) / 200;
+      calories_burned = (req.body.duration * (7 * 3.5 * req.session.weight)) / 200;
     } else if (req.body.activity_id === 2) {
-      calories_burned = (req.body.duration * (5 * 3.5 * user_weight)) / 200;
+      calories_burned = (req.body.duration * (5 * 3.5 * req.session.weight)) / 200;
     }
 
     let exerciseData = await Exercise.create({
@@ -80,13 +77,13 @@ router.post("/", async (req, res) => {
       duration: req.body.duration,
       activity_id: req.body.activity_id, //need to make this responsive w/ frontend dropdown input
       calories_burned,
-      user_id: req.body.user_id, //NEED TO INPUT USER ID BASED ON AUTH
+      user_id: req.session.user_id, //NEED TO INPUT USER ID BASED ON AUTH
     });
+    console.log("user id", req.session.user_id)
     const preference = 'chinese';
     const myRecommendation = await edamamData(calories_burned, preference);
     res.status(200).json({exercises: exerciseData.dataValues, recommendations: myRecommendation});
-    // res.render("all", { exercises: exerciseData.dataValues, recommendations: userRecommendations });
-
+    
   } catch (err) {
     res.status(400).json(err);
   }

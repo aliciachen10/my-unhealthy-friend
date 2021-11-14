@@ -11,6 +11,9 @@ router.get('/', async (req, res) => {
   try {
     const exerciseData = await Exercise.findAll({
       include: [{ model: User }, { model: Activity }],
+      where: { 
+        user_id: req.session.user_id 
+      },
     });
     // res.status(200).json(exerciseData);
     const exercises = exerciseData.map((exercise) => exercise.get({ plain: true }));

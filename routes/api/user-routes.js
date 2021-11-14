@@ -7,40 +7,43 @@ const withAuth = require('../../utils/auth');
 // The `/api/users` endpoint
 
 //get all users, with their exercises and preferences
-router.get('/', async (req, res) => {
-  try {
-    const userData = await User.findAll({
-      include: [{ model: Exercise }, { model: Category }],
-    });
-    // res.status(200).json(userData);
-    const users = userData.map((user) => user.get({ plain: true }));
-    // console.log("here are users ", users)
-    res.render('users', { users });
-    // console.log(req.session.loggedIn)
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//new route to get user with exercises
-// Use withAuth middleware to prevent access to route
-// router.get('/', withAuth, async (req, res) => {
+// router.get('/', async (req, res) => {
 //   try {
-//     // Find the logged in user based on the session ID
-//     const userData = await User.findByPk(req.session.user_id, {
-//       attributes: { exclude: ['password'] },
-//       include: [{ model: Exercise }, {model: Category}],
+//     const userData = await User.findAll({
+//       include: [{ model: Exercise }, { model: Category }],
 //     });
-
-//     const user = userData.get({ plain: true });
-//     res.render('all', {
-//       ...user,
-//       logged_in: true
-//     });
+//     // res.status(200).json(userData);
+//     const users = userData.map((user) => user.get({ plain: true }));
+//     // console.log("here are users ", users)
+//     // res.render('users', { users });
+//     res.status(200).json(userData)
+//     // console.log(req.session.loggedIn)
 //   } catch (err) {
 //     res.status(500).json(err);
 //   }
 // });
+
+//new route to get user with exercises
+// Use withAuth middleware to prevent access to route
+router.get('/', async (req, res) => {
+  try {
+    // Find the logged in user based on the session ID
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: Exercise }, {model: Category}],
+    });
+
+    const user = userData.get({ plain: true });
+    console.log(">>>>>>user below<<<<<<<<<*****************")
+    console.log(req.session.user_id)
+    res.render('all', {
+      ...user,
+      logged_in: true
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.get('/exercises', async (req, res) => {
   try {
@@ -222,9 +225,12 @@ router.post('/login', async (req, res) => {
       return;
     }
     req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.weight = userData.weight;
+      //insert user preferences here to save them with the session
       req.session.loggedIn = true;
    
-    console.log("<<<<<<< This is to test true/false of req.session.loggedIN >>>>>>> " + req.session.loggedIn)
+    console.log("<<<<<<< This is to test true/false of req.session.user_weight >>>>>>> " + req.session.weight)
     res.status(200).json({ message: 'You are now logged in!' })
   });
   } catch (err) {
