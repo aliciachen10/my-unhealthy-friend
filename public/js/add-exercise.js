@@ -8,7 +8,7 @@ async function newFormHandler(event) {
   let activity_id;
 
   const user_id = 2;
-  
+
   if (exercise_type === "running") {
     activity_id = 1;
   } else if (exercise_type === "cycling") {

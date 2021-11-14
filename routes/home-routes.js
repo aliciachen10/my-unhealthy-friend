@@ -18,7 +18,8 @@ router.get('/', async (req, res) => {
     // res.status(200).json(exerciseData);
     const exercises = exerciseData.map((exercise) => exercise.get({ plain: true }));
     res.render('all', { exercises,
-      loggedIn: req.session.loggedIn
+      loggedIn: req.session.loggedIn,
+      user_id: req.session.user_id
      })
   } catch (err) {
     res.status(500).json(err);
