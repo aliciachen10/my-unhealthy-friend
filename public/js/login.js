@@ -24,23 +24,24 @@ if (email && password) {
 
 const signupFormHandler = async (event) => {
     event.preventDefault();
+    console.log(">>>>> Is this running?")
     
     const firstName = document.querySelector('#first-name-signup').value.trim();
     const lastName = document.querySelector('#last-name-signup').value.trim();
-    const username = document.querySelector('#username-signup').value.trim();
     const email = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
     const weight = document.querySelector('#weight-signup').value.trim();
     const height = document.querySelector('#height-signup').value.trim();
   
-    if (username && email && password) {
+    if (firstName && lastName && email && password && weight && height) {
       const response = await fetch('/api/users', {
         method: 'POST',
-        body: JSON.stringify({ firstName, lastName, username, email, password, weight, height }),
+        body: JSON.stringify({ firstName, lastName, email, password, weight, height }),
         headers: { 'Content-Type': 'application/json' },
       });
   
       if (response.ok) {
+        console.log(response.ok)
         document.location.replace('/');
       } else {
         alert('Failed to sign up.');

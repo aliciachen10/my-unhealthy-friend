@@ -40,6 +40,7 @@ router.get('/exercises', async (req, res) => {
 
 //create a new user
 router.post('/', async (req, res) => {
+  console.log('>>>>Does create user work?')
   // {
   //   "firstName": "Andy",
   //   "lastName": "Alexander",
@@ -47,7 +48,7 @@ router.post('/', async (req, res) => {
   //   "weight": 175
 // }
   try {
-
+    
     const newUser = req.body
     newUser.password = await bcrypt.hash(req.body.password, 10);
 
@@ -59,12 +60,11 @@ router.post('/', async (req, res) => {
       email: req.body.email,
       password: req.body.password 
     });
-    //adding req.session.save variable when new user is created
-    //when created loggedIn value set to true.
+  
     req.session.save(() => {
       req.session.loggedIn = true;
+      res.status(200).json(userData);
     });
-    res.status(200).json(userData);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -211,6 +211,18 @@ router.post('/login', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.post('/logout', (req, res) => {
+  console.log(">>>> is logout working?")
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
+
 
 
 module.exports = router;
