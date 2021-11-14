@@ -17,17 +17,23 @@ async function edamamData(calories_burned, preference) {
   try { //use an await on the get request and an await on the response 
 
     const calories_burned_rounded = Math.round(Math.floor(calories_burned));
-
-    const response = await got(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=90e521d5fd7b9f2ee89888aaa573e898&ingr=${preference}&nutrition-type=cooking&category=fast-foods&calories=${calories_burned_rounded}`, { responseType: 'json'});
+    const response = await got(`https://api.edamam.com/api/recipes/v2?type=public&q=${preference}&app_id=ae9304a1&app_key=1a636d7810dc05429f16a21db43490f2&calories=${calories_burned_rounded}`, { responseType: 'json'});
     // const response = await got(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=90e521d5fd7b9f2ee89888aaa573e898&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=500`, { responseType: 'json'});
     const result = await response;
-    console.log(">>>>>>WHERE IS THE COKE>>>>>", result.body.hints[0].food.label);
+    // let recipe_dict = [];
+    let recipe_dict = []
+    for (i = 0; i < result.body.hits.length; i++) {
+      let single_recipe = {};
+      single_recipe['uri'] = result.body.hits[i].recipe.url
+      single_recipe['calories'] = result.body.hits[i].recipe.calories
+      single_recipe['image'] = result.body.hits[i].recipe.image
+      single_recipe['label'] = result.body.hits[i].recipe.label
+      recipe_dict.push(single_recipe)
 
-    return result.body.hints[0].food.label
-    // console.log(response.body.explanation);
+    }
+    return recipe_dict
   } catch (error) {
     console.log(error)
-    // console.log(error.response.body);
   }
 };
 
@@ -41,7 +47,6 @@ function edamamv2() {https.get('https://api.edamam.com/api/food-database/v2/pars
 
   // The whole response has been received. Print out the result.
   return resp.on('end', () => {
-    // console.log(JSON.parse(data)['hints'][0]['food']['label']);
     const foodSuggestion = JSON.parse(data)['hints'][0]['food']['label']
     return foodSuggestion;
     
@@ -52,18 +57,6 @@ function edamamv2() {https.get('https://api.edamam.com/api/food-database/v2/pars
 });}
 
 // The `/api/exercises` endpoint
-
-//TESTING THE EDAMAM ROUTE
-router.get("/test", async (req, res) => {
-  try {
-    edamamData();
-    // let edamamResult = await edamamv2()
-    // console.log("TESTING THE EDAMAM ROUTE>>>", edamamResult)
-    res.status(200).json(edamamv2())
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 router.get("/", async (req, res) => {
   try {
@@ -110,54 +103,9 @@ router.post("/", async (req, res) => {
       calories_burned,
       user_id: req.body.user_id, //NEED TO INPUT USER ID BASED ON AUTH
     });
-
-
-    // const { activities } = req.body;
-    // const preferences = await User.find() **this is whatever you do to get the preferences
-    // const activityCalories = ** whatever you do to calculate activity calories
-
-    // router.get("/:user_id/preferences", async (req, res) => {
-    //   // find a user tag by its `id`
-    //   // be sure to include its associated exercise and preference data
-    //   try {
-    //     const userData = await Preference.findOne(
-    //       //to do: need to change this to findAll
-    //       {
-    //         // Gets the book based on the isbn given in the request parameters
-    //         where: {
-    //           user_id: req.params.user_id,
-    //         },
-    //       }
-    //     );
-
-    //     if (!userData) {
-    //       res.status(404).json({ message: "No user found with that id!" });
-    //       return;
-    //     }
-    //     const user = userData.get({ plain: true });
-    //     res.status(200).json(userData);
-    //   } catch (err) {
-    //     res.status(500).json(err);
-    //   }
-    // });
-
-    // const recommendations = await fetch(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=90e521d5fd7b9f2ee89888aaa573e898&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=500`)
-    // const recData = await recommendations.json();
-    // console.log(recData)
-    const preference = 'mexican';
+    const preference = 'chinese';
     const myRecommendation = await edamamData(calories_burned, preference);
-    console.log(myRecommendation)
-    const userRecommendations = {'foodName': myRecommendation}
-    console.log(userRecommendations)
-    console.log(exerciseData.dataValues)
-    // console.log(recommendations)
-    // const recommendations = await fetch(`https://edemamapi.com/search?key={{blahblahblah}}&calories=${activityCalories}&diet=${preferences}`);
-    // after this you might want to serialize the data and pull off only what you need to send to the client
-    // const userReccomendations = recommendations.map(r => ({ calories: r.calories, fat: r.fat, ingredients: r.ingredients }));
-    // res.render('whateveryourviewisnamed', userRecommendations);
-    // res.status(200).json(getEdamamData(500));
-    // res.status(200).json(userRecommendations);
-    res.status(200).json({exercises: exerciseData.dataValues, recommendations: userRecommendations});
+    res.status(200).json({exercises: exerciseData.dataValues, recommendations: myRecommendation});
     // res.render("all", { exercises: exerciseData.dataValues, recommendations: userRecommendations });
 
   } catch (err) {
@@ -171,7 +119,6 @@ router.get('/user/:user_id', async (req, res) => {
   try {
     const userData = await Exercise.findAll( //to do: need to change this to findAll
       {
-        // Gets the book based on the isbn given in the request parameters
         where: { 
           user_id: req.params.user_id 
         },
@@ -192,19 +139,7 @@ router.get('/user/:user_id', async (req, res) => {
 async function getEdamamData(calories) {
   const response = await fetch(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=90e521d5fd7b9f2ee89888aaa573e898&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=${calories}`)
   const recommendations = await response.json();
-  console.log(recommendations['hints'][0]['food']['label'])
 }
-
-
-// router.get("/api/activities", async (req, res) => {
-// const { activities } = req.body;
-// const preferences = await User.find() **this is whatever you do to get the preferences
-// const activityCalories = ** whatever you do to calculate activity calories
-// const recommendations = await fetch(`https://edemamapi.com/search?key={{blahblahblah}}&calories=${activityCalories}&diet=${preferences}`);
-// after this you might want to serialize the data and pull off only what you need to send to the client
-// const userReccomendations = recommendations.map(r => ({ calories: r.calories, fat: r.fat, ingredients: r.ingredients }));
-// res.render('whateveryourviewisnamed', userRecommendations);
-// });
 
 //get one exercise by exercise id
 // will be useful for displaying exercise history
