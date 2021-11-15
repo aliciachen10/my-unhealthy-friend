@@ -39,4 +39,9 @@ border: solid rgb(0, 0, 0) 1px;
     margin-bottom: 1%;
 }
 
+.footer {
+    background-color: rgb(255, 174, 0);
+    text-align: center;
+    padding: 10px;
+}
 
