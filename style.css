@@ -1,3 +1,24 @@
+/* The navbar container */
+.navbar {
+    overflow: hidden;
+  }
+  
+  /* Navbar links */
+  .navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Links - change color on hover */
+  .navbar a:hover {
+    background-color: rgb(255, 174, 0);
+    color: black;
+  }
+
 .card-body {
     padding-top: 2%
 }
