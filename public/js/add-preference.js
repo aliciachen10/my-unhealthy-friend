@@ -7,13 +7,11 @@ const preferenceSubmit = (event) => {
     const preferenceSelections = [];
 
     const preferences = document.getElementsByName('preference')
-    console.log(preferences)
     for (i = 0; i < preferences.length; i++) {
         if (preferences[i].checked) {
             preferenceSelections.push(preferences[i].value)
         }
     };
-    console.log(preferenceSelections);
 
 
     for (i = 0; i < preferenceSelections.length; i++) {
@@ -53,7 +51,6 @@ const user_id = 1;
 
 const preferenceDbAdd = async (category_id) => {
 
-    console.log(category_id)
     if (category_id) {
         const response = await fetch(`/api/preferences`, {
             method: "POST",

@@ -84,6 +84,7 @@ router.post('/', async (req, res) => {
     req.session.save(() => {
       req.session.loggedIn = true;
       req.session.user_id = userData_found.id
+      req.session.weight = userData_found.weight;
       res.status(200).json(userData);
     });
 
@@ -207,15 +208,17 @@ router.delete('/:id', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
+  console.log("console log req.body", req.body)
   try {
     const userData = await User.findOne({include: [{ model: Category }], where: { email: req.body.email }});
-
+    console.log("userData>>>", userData)
     
     //collect the user's preferences in a user_preferences array here so that we can pass that as a property of the session
     const user_preferences = [];
     for (var i = 0; i < userData.categories.length; i++) {
       user_preferences.push(userData.categories[i].category_name)
     }
+
     if (!userData) {
       
       res.status(404).json({ message: '1Login failed. Please try again!' });
@@ -226,6 +229,8 @@ router.post('/login', async (req, res) => {
       req.body.password,
       userData.password
     );
+
+    console.log("validpassword>>>>", validPassword)
   
     if (!validPassword) {
       res.status(400).json({ message: '2Login failed. Please try again!' });

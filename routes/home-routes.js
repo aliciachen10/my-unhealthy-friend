@@ -42,10 +42,10 @@ router.get('/app', async (req, res) => {
 
     req.session.save(() => {
       req.session.loggedIn = true;
-      req.session.preferences = userData.categories;
+      // req.session.preferences = userData.categories;
     });
 
-    console.log("is this true????", req.session.preferences)
+    // console.log("is this true????", req.session.preferences)
 
     const exercises = exerciseData.map((exercise) => exercise.get({ plain: true })).reverse();
     res.render('all', { exercises,
@@ -61,6 +61,7 @@ router.get('/app', async (req, res) => {
 
 // Login route
 router.get('/login', (req, res) => {
+  console.log("req.session>>>>>>>", req.session)
   // If the user is already logged in, redirect to the homepage
   if (req.session.loggedIn) {
     res.redirect('/');
@@ -72,6 +73,7 @@ router.get('/login', (req, res) => {
 
 router.get('/preference', (req, res) => {
   try {
+    
     res.render('preference', {
       loggedIn: req.session.loggedIn,
       user_id: req.session.user_id

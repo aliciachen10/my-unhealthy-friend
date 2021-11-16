@@ -28,6 +28,15 @@ router.post('/', async (req, res) => {
       // height: req.body.height,
       // weight: req.body.weight
     });
+
+    //check this
+    // const userData = await User.findOne({include: [{ model: Category }], where: { id: req.session.user_id }});
+
+    // req.session.save(() => {
+    //   req.session.loggedIn = true;
+      // req.session.preferences = userData.categories;
+    // });
+
     res.status(200).json({preferenceData});
   } catch (err) {
     res.status(400).json(err);

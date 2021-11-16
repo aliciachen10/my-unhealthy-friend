@@ -59,10 +59,6 @@ router.post("/", async (req, res) => {
   //     "user_id": 3,
   // },
 
-  // Duration of physical activity in minutes × (MET × 3.5 × your weight in kg) / 200 = Total calories burned.
-  // METs for jogging/running and swimming = 7
-  // METs for cycling = 5
-
   try {
     let calories_burned; 
 
@@ -78,16 +74,25 @@ router.post("/", async (req, res) => {
       activity_id: req.body.activity_id, 
       calories_burned,
       user_id: req.session.user_id, 
+      // user_id: req.body.user_id
     });
 
+    //INSERT IN HERE TO GET REQ.SESSION.PREFERENCES SINCE IT ISN'T BEING RECOGNIZED 
+    const userData = await User.findOne({include: [{ model: Category }], where: { id: req.session.user_id }});
+    // console.log("GETTING USER DATA????", userData.dataValues.categories)
+    req.session.save(() => {
+      req.session.loggedIn = true;
+      req.session.preferences = userData.categories;
+    });
+    console.log(req.session.preferences, "!!!!")
     //get an array of string preferences from req.session.preferences 
     //preference_array should return an array that looks like this: ['italian', 'chinese', 'american', 'mexican']
     let preference_array = [];
-    req.session.preferences.forEach(entry => preference_array.push(entry.category_name))
-
+    userData.categories.forEach(entry => preference_array.push(entry.category_name))
+    console.log('preference_array', preference_array)
     //get a random entry from the user preference array 
     let chooseRandomPreference = Math.floor(Math.random() * preference_array.length);
-
+    //console.log here? 
     //pass the calories burned and the random preference to the get edamamData function
     const myRecommendation = await edamamData(calories_burned, preference_array[chooseRandomPreference]);
     res.status(200).json({exercises: exerciseData.dataValues, recommendations: myRecommendation, user_id: req.session.user_id});
