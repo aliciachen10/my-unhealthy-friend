@@ -64,6 +64,17 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/preference', (req, res) => {
+  
+    res.render('preference', {
+      loggedIn: req.session.loggedIn,
+      user_id: req.session.user_id
+    })
+  
+});
+
+
+
 //logout route
 
 

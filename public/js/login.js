@@ -41,7 +41,7 @@ const signupFormHandler = async (event) => {
   
       if (response.ok) {
         console.log(response.ok)
-        document.location.replace('/');
+        document.location.replace('/preference');
       } else {
         alert('Failed to sign up.');
       }
