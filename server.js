@@ -4,7 +4,7 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./routes');
 const helpers = require('./utils/helpers');
-
+const dotenv = require('dotenv').config()
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -14,10 +14,10 @@ const PORT = process.env.PORT || 3001;
 
 
 const sess = {
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'secret',
   cookie: {},
-  resave: false, // Alper touched on resave and saveUnitlialized by I don't really understand
-  saveUninitialized: false,
+  resave: true, // Alper touched on resave and saveUnitlialized by I don't really understand
+  saveUninitialized: true,
   store: new SequelizeStore({
     db: sequelize
   })
