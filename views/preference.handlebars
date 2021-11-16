@@ -64,16 +64,10 @@
 
 
 <script>
-var loggedIn1 = {{loggedIn}}
-var userId = {{user_id}}
+  var userId = {{user_id}};
 
-console.log(loggedIn1)
-console.log(userId)
-
-const preferenceSubmit = (event) => {
+  async function preferenceSubmit(event) {
     event.preventDefault();
-    
-   
     const preferenceSelections = [];
 
     const preferences = document.getElementsByName('preference')
@@ -85,8 +79,7 @@ const preferenceSubmit = (event) => {
     };
     console.log(preferenceSelections);
 
-
-    for (i = 0; i < preferenceSelections.length; i++) {
+        for (i = 0; i < preferenceSelections.length; i++) {
         let category_id = []
 
         if (preferenceSelections[i] === 'italian') {
@@ -116,31 +109,31 @@ const preferenceSubmit = (event) => {
             preferenceDbAdd(category_id)
           
         }
-    }    
-};
+    } 
 
-const preferenceDbAdd = async (category_id) => {
-
-    console.log(category_id)
+      const preferenceDbAdd = async (category_id) => {
+    
     if (category_id) {
-        const response = await fetch(`/api/preferences`, {
-            method: "POST",
-            body: JSON.stringify({
-              category_id,
-              user_id: userId,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
+      const response = await fetch(`/api/preferences/`, {
+        method: "POST",
+        body: JSON.stringify({
+          category_id: category_id,
+          user_id: userId
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
     }
 }
-
-
-
-
+  
+  if (response.ok) {
+    // document.location.replace('/');
+  } else {
+    alert("Failed to add exercise");
+  }
+}
 document.querySelector('#preference-submit').addEventListener("click", preferenceSubmit)
-
 </script>
-
 

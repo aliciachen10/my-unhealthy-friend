@@ -1,0 +1,114 @@
+
+
+
+<div class="container"> 
+
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="preference" value="thai" id="thai">
+        <label class="custom-control-label" for="customCheck1">Thai</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="preference" value="french" id="french">
+        <label class="custom-control-label" for="customCheck1">French</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input"  name="preference" value="chinese" id="chinese">
+        <label class="custom-control-label" for="customCheck1">Chinese</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="preference" value="mexican" id="mexican">
+        <label class="custom-control-label" for="customCheck1">Mexican</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="preference" value="italian" id="italian">
+        <label class="custom-control-label" for="customCheck1">Italian</label>
+      </div>
+       <div> 
+          <button type="submit" id="preference-submit" class=" btn-style">Submit Preferences</button>
+        </div>
+      
+</div>
+{{!-- <script src="./js/add-preference.js"></script> --}}
+
+
+
+<script>
+var loggedIn1 = {{loggedIn}}
+var userId = {{user_id}}
+
+console.log(loggedIn1)
+console.log(userId)
+
+const preferenceSubmit = (event) => {
+    event.preventDefault();
+    
+   
+    const preferenceSelections = [];
+
+    const preferences = document.getElementsByName('preference')
+    console.log(preferences)
+    for (i = 0; i < preferences.length; i++) {
+        if (preferences[i].checked) {
+            preferenceSelections.push(preferences[i].value)
+        }
+    };
+    console.log(preferenceSelections);
+
+
+    for (i = 0; i < preferenceSelections.length; i++) {
+        let category_id = []
+
+        if (preferenceSelections[i] === 'italian') {
+            category_id = 1;
+            preferenceDbAdd(category_id, userId)
+        } else if (preferenceSelections[i] === 'chinese') {
+            category_id = 2;
+            preferenceDbAdd(category_id, userId)
+        } else if (preferenceSelections[i] === 'french') {
+            category_id = 3
+            preferenceDbAdd(category_id, userId)
+        } else if (preferenceSelections[i] === 'american') {
+            category_id = 4
+            preferenceDbAdd(category_id, userId)
+           
+        } else if (preferenceSelections[i] === 'indian') {
+            category_id = 5
+            preferenceDbAdd(category_id, userId)
+           
+        } else if (preferenceSelections[i] === 'mexican') {
+            category_id = 6
+            preferenceDbAdd(category_id, userId)
+            
+        } else {
+            //thai
+            category_id = 7
+            preferenceDbAdd(category_id)
+          
+        }
+    }    
+};
+
+console.log("first userid console.log",)
+const preferenceDbAdd = async (category_id, userId) => {
+  console.log("USERID CONSOLE LOG!!!!!!!!!", userId)
+    
+    if (category_id) {
+        const response = await fetch(`/api/preferences`, {
+            method: "POST",
+            body: JSON.stringify({
+              category_id,
+              user_id: userId
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+    }
+}
+
+
+document.querySelector('#preference-submit').addEventListener("click", preferenceSubmit)
+
+</script>
+
+

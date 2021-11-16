@@ -23,12 +23,32 @@ router.post('/', async (req, res) => {
 // }
   try {
     const preferenceData = await Preference.create({
-      user_id: req.session.user_id,
+      user_id: req.body.user_id,
       category_id: req.body.category_id
       // height: req.body.height,
       // weight: req.body.weight
     });
-    res.status(200).json({preferenceData, user_id: req.session.user_id});
+    res.status(200).json({preferenceData});
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+// create new preference by user id
+router.post('/:user_id', async (req, res) => {
+  //format for this request: 
+//   {
+//     "user_id": 3,
+//     "category_id": 6
+// }
+  try {
+    const preferenceData = await Preference.create({
+      user_id: req.params.user_id,
+      category_id: req.body.category_id
+      // height: req.body.height,
+      // weight: req.body.weight
+    });
+    res.status(200).json({preferenceData});
   } catch (err) {
     res.status(400).json(err);
   }
