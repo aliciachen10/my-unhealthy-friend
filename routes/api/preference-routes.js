@@ -23,12 +23,12 @@ router.post('/', async (req, res) => {
 // }
   try {
     const preferenceData = await Preference.create({
-      user_id: req.body.user_id,
+      user_id: req.session.user_id,
       category_id: req.body.category_id
       // height: req.body.height,
       // weight: req.body.weight
     });
-    res.status(200).json(preferenceData);
+    res.status(200).json({preferenceData, user_id: req.session.user_id});
   } catch (err) {
     res.status(400).json(err);
   }
