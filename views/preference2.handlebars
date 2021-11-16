@@ -33,10 +33,16 @@
 
 
 <script>
-  var userId = {{user_id}};
+var loggedIn1 = {{loggedIn}}
+var userId = {{user_id}}
 
-  async function preferenceSubmit(event) {
+console.log(loggedIn1)
+console.log(userId)
+
+const preferenceSubmit = (event) => {
     event.preventDefault();
+    
+   
     const preferenceSelections = [];
 
     const preferences = document.getElementsByName('preference')
@@ -48,29 +54,30 @@
     };
     console.log(preferenceSelections);
 
-        for (i = 0; i < preferenceSelections.length; i++) {
+
+    for (i = 0; i < preferenceSelections.length; i++) {
         let category_id = []
 
         if (preferenceSelections[i] === 'italian') {
             category_id = 1;
-            preferenceDbAdd(category_id)
+            preferenceDbAdd(category_id, userId)
         } else if (preferenceSelections[i] === 'chinese') {
             category_id = 2;
-            preferenceDbAdd(category_id)
+            preferenceDbAdd(category_id, userId)
         } else if (preferenceSelections[i] === 'french') {
             category_id = 3
-            preferenceDbAdd(category_id)
+            preferenceDbAdd(category_id, userId)
         } else if (preferenceSelections[i] === 'american') {
             category_id = 4
-            preferenceDbAdd(category_id)
+            preferenceDbAdd(category_id, userId)
            
         } else if (preferenceSelections[i] === 'indian') {
             category_id = 5
-            preferenceDbAdd(category_id)
+            preferenceDbAdd(category_id, userId)
            
         } else if (preferenceSelections[i] === 'mexican') {
             category_id = 6
-            preferenceDbAdd(category_id)
+            preferenceDbAdd(category_id, userId)
             
         } else {
             //thai
@@ -78,31 +85,30 @@
             preferenceDbAdd(category_id)
           
         }
-    } 
+    }    
+};
 
-      const preferenceDbAdd = async (category_id) => {
+console.log("first userid console.log",)
+const preferenceDbAdd = async (category_id, userId) => {
+  console.log("USERID CONSOLE LOG!!!!!!!!!", userId)
     
     if (category_id) {
-      const response = await fetch(`/api/preferences/`, {
-        method: "POST",
-        body: JSON.stringify({
-          category_id: category_id,
-          user_id: userId
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
+        const response = await fetch(`/api/preferences`, {
+            method: "POST",
+            body: JSON.stringify({
+              category_id,
+              user_id: userId
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
     }
 }
-  
-  if (response.ok) {
-    // document.location.replace('/');
-  } else {
-    alert("Failed to add exercise");
-  }
-}
+
+
 document.querySelector('#preference-submit').addEventListener("click", preferenceSubmit)
+
 </script>
+
 
