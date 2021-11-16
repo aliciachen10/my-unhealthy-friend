@@ -48,7 +48,7 @@
 
        <div class="button-container"> 
           <form action="/app">
-            <input type="submit" value="Submit preferences" class="btn btn-primary"/>
+            <input type="submit" value="Submit preferences" id="preference-submit" class="btn btn-primary"/>
           </form>
         </div>
         </div>
@@ -76,7 +76,7 @@
             preferenceSelections.push(preferences[i].value)
         }
     };
-
+    console.log("preferenceSelections", preferenceSelections)
     for (i = 0; i < preferenceSelections.length; i++) {
         let category_id = []
 

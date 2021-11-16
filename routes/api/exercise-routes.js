@@ -19,6 +19,7 @@ async function edamamData(calories_burned, preference) {
 
     const calories_burned_rounded = Math.round(Math.floor(calories_burned));
     const response = await got(`https://api.edamam.com/api/recipes/v2?type=public&q=${preference}&app_id=ae9304a1&app_key=1a636d7810dc05429f16a21db43490f2&calories=${calories_burned_rounded}`, { responseType: 'json'});
+    console.log("what preference is being piped in there anyway?", preference)
     const result = await response;
     let recipe_dict = []
     for (i = 0; i < result.body.hits.length; i++) {
@@ -84,7 +85,7 @@ router.post("/", async (req, res) => {
       req.session.loggedIn = true;
       req.session.preferences = userData.categories;
     });
-    console.log(req.session.preferences, "!!!!")
+    console.log("userData>>>", userData)
     //get an array of string preferences from req.session.preferences 
     //preference_array should return an array that looks like this: ['italian', 'chinese', 'american', 'mexican']
     let preference_array = [];

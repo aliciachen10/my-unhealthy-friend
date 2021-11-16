@@ -244,6 +244,7 @@ router.post('/login', async (req, res) => {
       req.session.weight = userData.weight;
       // req.session.preferences = userData.categories;
       req.session.loggedIn = true;
+    
     res.status(200).json({ message: 'You are now logged in!' })
   });
   } catch (err) {
