@@ -15,11 +15,14 @@ const loginFormHandler = async (event) => {
         'Content-Type': 'application/json'
       },
     });
+    if (response.ok) {
+      document.location.replace('/app');
+    } else {
+      alert('Failed to sign up.');
+    }
   }
 };
 
-
-//<<<<<<<<******* We need to add more fields into the sign up area 
 
 const signupFormHandler = async (event) => {
   event.preventDefault();

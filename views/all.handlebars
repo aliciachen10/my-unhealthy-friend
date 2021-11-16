@@ -79,7 +79,7 @@ body {
             <p>Distance: {{exercise.distance}} miles</p>
             <p>Duration: {{exercise.duration}} minutes</p>
             <p>Calories burned: {{exercise.calories_burned}} kCal</p>
-            <p>When you did it: {{exercise.createdAt}}</p>
+            <p class="exTime">{{exercise.createdAt}}</p>
           </p>
         </div>
       </div>
@@ -91,6 +91,9 @@ body {
 <!--TO DO: this entire script file needs to be put back into the add-exercise.js after troubleshooting with instructor on Tuesday
 Andrew, don't worry about doing this. The reason this script is in here is for reasons I can explain to you later-->
 <script>
+
+
+
   var userId = {{user_id}};
   async function newFormHandler(event) {
   event.preventDefault();
@@ -175,8 +178,18 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
       "Content-Type": "application/json",
     },
   });
+  
   const formattedActivityResponse = await activity_response.json();
+  console.log(formattedActivityResponse)
   formattedActivityResponse.slice().reverse().forEach(exercise => {
+
+
+
+m = moment(exercise.createdAt)
+console.log(m)
+console.log(m._pf.parsedDateParts[0])
+
+
     const card = `<div class="card exercise col-md-4">
     <div class="card-content">
       <h4 class="card-title">
@@ -189,12 +202,12 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
         <p>Distance: ${exercise.distance} miles</p>
         <p>Duration: ${exercise.duration} minutes</p>
         <p>Calories burned: ${exercise.calories_burned} kCal</p>
-        <p>When you did it: ${exercise.createdAt}</p>
+        <p>When you did it: ${m._pf.parsedDateParts[1] + 1}/${m._pf.parsedDateParts[3]}/${m._pf.parsedDateParts[0]}</p>
       </p>
     </div>
     <div class="card-read-more">
       <a
-        href="http://github.com/aliciachen10/weather-dashboard"
+        href="http://localhost:3001/app"
         class="btn btn-link btn-block"
       >
         Get suggestions
