@@ -62,6 +62,13 @@ const preferenceDbAdd = async (category_id) => {
               "Content-Type": "application/json",
             },
           })
+          console.log("huh?")
+          if (response.ok) {
+              console.log('does this even work?')
+            document.location.replace('/app');
+          } else {
+            alert('Failed to add preference');
+          }
     }
 }
 
