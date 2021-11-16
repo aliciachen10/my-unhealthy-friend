@@ -1,14 +1,11 @@
-async function newFormHandler(event) {
+ var userId = 1; //hardcoded; needs to be removed;
+  async function newFormHandler(event) {
   event.preventDefault();
   const distance = document.querySelector("#distance").value;
   const duration = document.querySelector("#duration").value;
-  const weight = document.querySelector("#weight").value;
   const exercise_type = document.querySelector("#exercise-type").value;
-
   let activity_id;
-
   // const user_id = 2;
-  const user_id = window.userId;
   if (exercise_type === "running") {
     activity_id = 1;
   } else if (exercise_type === "cycling") {
@@ -16,14 +13,13 @@ async function newFormHandler(event) {
   } else if (exercise_type === "swimming") {
     activity_id = 3;
   }
-
   const response = await fetch(`/api/exercises`, {
     method: "POST",
     body: JSON.stringify({
       distance,
       duration,
       activity_id,
-      user_id,
+      user_id: userId,
     }),
     headers: {
       "Content-Type": "application/json",
@@ -32,7 +28,6 @@ async function newFormHandler(event) {
   const formattedResponse = await response.json();
   const recommendation_div = document.querySelector(".recommendations-div");
   let final_recommendations = [];
-
   //filter the entries by calories manually
   for (var i = 0; i < formattedResponse.recommendations.length; i++) {
     if (formattedResponse.recommendations[i].calories < formattedResponse.exercises.calories_burned) {
@@ -41,7 +36,6 @@ async function newFormHandler(event) {
   }
   var cardDiv = {};
   var cardDate = {};
-
   //clear the html of the recommendation_div
   recommendation_div.innerHTML = "";
   //display how many calories a user has burned
@@ -49,26 +43,20 @@ async function newFormHandler(event) {
   caloriesBurned.setAttribute("class", "card m-2 flex-grow"); 
   caloriesBurned.innerHTML = `You burned ${Math.round(formattedResponse.exercises.calories_burned)} calories.`
   recommendation_div.appendChild(caloriesBurned);
-
   if (final_recommendations.length > 1) {
     for (var i = 0; i < final_recommendations.length; i++) {
       cardDiv[i] = document.createElement("div");
-
       cardDiv[i].setAttribute("class", "card m-2 flex-grow"); //ml-3
-
       cardDate[i] = document.createElement("h5");
       cardDate[i].innerHTML = `<a href=${final_recommendations[i].uri}>${final_recommendations[i].label}</a>`
       cardDiv[i].appendChild(cardDate[i]);
-
       const weatherImg = document.createElement("img");
       weatherImg.setAttribute("class", "weather-image");
       weatherImg.src = final_recommendations[i].image
       cardDiv[i].appendChild(weatherImg);
-
       cardDiv[i].innerHTML +=
         "<p>Calories: " + Math.round(final_recommendations[i].calories)
         " \xB0F</p>";
-
       recommendation_div.appendChild(cardDiv[i]);
     }
   } else {
@@ -77,12 +65,10 @@ async function newFormHandler(event) {
     cardDiv.innerHTML += "Your activity didn't return any recommendations. It could be that you didn't burn enough calories to be recommended unhealthy food. :("
     recommendation_div.appendChild(cardDiv) 
   }
-
   //clear the current activity div and populate with all exercises for each user based off a get request 
   const activity_history = document.querySelector(".clear-class");
   activity_history.innerHTML = "";
-
-  const activity_response = await fetch(`api/users/${user_id}/exercises`, {
+  const activity_response = await fetch(`api/users/${userId}/exercises`, {
     method: "GET",
     // body: JSON.stringify({
     //   distance,
@@ -95,8 +81,7 @@ async function newFormHandler(event) {
     },
   });
   const formattedActivityResponse = await activity_response.json();
-
-  formattedActivityResponse.forEach(exercise => {
+  formattedActivityResponse.slice().reverse().forEach(exercise => {
     const card = `<div class="card exercise col-md-4">
     <div class="card-content">
       <h4 class="card-title">
@@ -123,14 +108,12 @@ async function newFormHandler(event) {
   </div>`
     activity_history.innerHTML += card
   })
-
   if (response.ok) {
     // document.location.replace('/');
   } else {
     alert("Failed to add exercise");
   }
 }
-
 document
   .querySelector(".new-exercise-form")
   .addEventListener("submit", newFormHandler);

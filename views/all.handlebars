@@ -5,13 +5,11 @@
   crossorigin="anonymous"
 />
 <link href="styles.css" rel="stylesheet" />
-
 {{#if loggedIn}}
   <div class="menu-container">
-
     <div class="card-header col-md-12 text-center">
       <h2>
-        🏋️ EXERCISE HISTORY
+        🏋️ Find your weakness 🍔
       </h2>
     </div>
     <div class="container">
@@ -19,10 +17,9 @@
         <!-- This is the form for adding a new exercise -->
         <div class="card add-exercise-container col-md-4">
           <h2>
-            ENTER ACTIVITY:
+            ENTER ACTIVITY
           </h2>
           <form class="new-exercise-form">
-
             <label for="exercise-type">Exercise Type:</label>
             <select name="exercise-type" id="exercise-type">
               <option value="running">RUNNING</option>
@@ -54,10 +51,8 @@
               SUBMIT
             </button>
           </form>
-
           
         </div>
-
         <div class="recommendations-div">
             {{recommendations}}
         </div>
@@ -82,26 +77,21 @@
           </p>
         </div>
       </div>
-
     {{/each}}
   </div>
 {{else}}
   <a href="/login">You must login first to view this page</a>
 {{/if}}
-
 <!--TO DO: this entire script file needs to be put back into the add-exercise.js after troubleshooting with instructor on Tuesday
 Andrew, don't worry about doing this. The reason this script is in here is for reasons I can explain to you later-->
 <script>
   var userId = {{user_id}};
-
   async function newFormHandler(event) {
   event.preventDefault();
   const distance = document.querySelector("#distance").value;
   const duration = document.querySelector("#duration").value;
   const exercise_type = document.querySelector("#exercise-type").value;
-
   let activity_id;
-
   // const user_id = 2;
   if (exercise_type === "running") {
     activity_id = 1;
@@ -110,7 +100,6 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
   } else if (exercise_type === "swimming") {
     activity_id = 3;
   }
-
   const response = await fetch(`/api/exercises`, {
     method: "POST",
     body: JSON.stringify({
@@ -126,7 +115,6 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
   const formattedResponse = await response.json();
   const recommendation_div = document.querySelector(".recommendations-div");
   let final_recommendations = [];
-
   //filter the entries by calories manually
   for (var i = 0; i < formattedResponse.recommendations.length; i++) {
     if (formattedResponse.recommendations[i].calories < formattedResponse.exercises.calories_burned) {
@@ -135,7 +123,6 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
   }
   var cardDiv = {};
   var cardDate = {};
-
   //clear the html of the recommendation_div
   recommendation_div.innerHTML = "";
   //display how many calories a user has burned
@@ -143,26 +130,20 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
   caloriesBurned.setAttribute("class", "card m-2 flex-grow"); 
   caloriesBurned.innerHTML = `You burned ${Math.round(formattedResponse.exercises.calories_burned)} calories.`
   recommendation_div.appendChild(caloriesBurned);
-
   if (final_recommendations.length > 1) {
     for (var i = 0; i < final_recommendations.length; i++) {
       cardDiv[i] = document.createElement("div");
-
       cardDiv[i].setAttribute("class", "card m-2 flex-grow"); //ml-3
-
       cardDate[i] = document.createElement("h5");
       cardDate[i].innerHTML = `<a href=${final_recommendations[i].uri}>${final_recommendations[i].label}</a>`
       cardDiv[i].appendChild(cardDate[i]);
-
       const weatherImg = document.createElement("img");
       weatherImg.setAttribute("class", "weather-image");
       weatherImg.src = final_recommendations[i].image
       cardDiv[i].appendChild(weatherImg);
-
       cardDiv[i].innerHTML +=
         "<p>Calories: " + Math.round(final_recommendations[i].calories)
         " \xB0F</p>";
-
       recommendation_div.appendChild(cardDiv[i]);
     }
   } else {
@@ -171,11 +152,9 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
     cardDiv.innerHTML += "Your activity didn't return any recommendations. It could be that you didn't burn enough calories to be recommended unhealthy food. :("
     recommendation_div.appendChild(cardDiv) 
   }
-
   //clear the current activity div and populate with all exercises for each user based off a get request 
   const activity_history = document.querySelector(".clear-class");
   activity_history.innerHTML = "";
-
   const activity_response = await fetch(`api/users/${userId}/exercises`, {
     method: "GET",
     // body: JSON.stringify({
@@ -189,7 +168,6 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
     },
   });
   const formattedActivityResponse = await activity_response.json();
-
   formattedActivityResponse.slice().reverse().forEach(exercise => {
     const card = `<div class="card exercise col-md-4">
     <div class="card-content">
@@ -217,17 +195,14 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
   </div>`
     activity_history.innerHTML += card
   })
-
   if (response.ok) {
     // document.location.replace('/');
   } else {
     alert("Failed to add exercise");
   }
 }
-
 document
   .querySelector(".new-exercise-form")
   .addEventListener("submit", newFormHandler);
 </script>
 <!--<script src="/js/add-exercise.js">const userId = {{user_id}}</script> -->
-
