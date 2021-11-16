@@ -1,4 +1,4 @@
- var userId = 1; //hardcoded; needs to be removed;
+
   async function newFormHandler(event) {
   event.preventDefault();
   const distance = document.querySelector("#distance").value;
