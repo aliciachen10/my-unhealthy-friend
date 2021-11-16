@@ -37,11 +37,21 @@ router.get('/app', async (req, res) => {
         user_id: req.session.user_id 
       },
     });
-    // res.status(200).json(exerciseData);
+
+    const userData = await User.findOne({include: [{ model: Category }], where: { id: req.session.user_id }});
+
+    req.session.save(() => {
+      req.session.loggedIn = true;
+      req.session.preferences = userData.categories;
+    });
+
+    console.log("is this true????", req.session.preferences)
+
     const exercises = exerciseData.map((exercise) => exercise.get({ plain: true })).reverse();
     res.render('all', { exercises,
       loggedIn: req.session.loggedIn,
-      user_id: req.session.user_id
+      user_id: req.session.user_id,
+      preferences: req.session.preferences
      })
   } catch (err) {
     res.status(500).json(err);

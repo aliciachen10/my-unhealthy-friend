@@ -93,13 +93,14 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
   const exercise_type = document.querySelector("#exercise-type").value;
   let activity_id;
   // const user_id = 2;
-  if (exercise_type === "running") {
+  type === "running") {
     activity_id = 1;
   } else if (exercise_type === "cycling") {
     activity_id = 2;
   } else if (exercise_type === "swimming") {
     activity_id = 3;
   }
+
   const response = await fetch(`/api/exercises`, {
     method: "POST",
     body: JSON.stringify({

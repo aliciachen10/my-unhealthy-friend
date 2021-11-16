@@ -78,9 +78,12 @@ router.post('/', async (req, res) => {
       email: req.body.email,
       password: req.body.password 
     });
-  
+
+    const userData_found = await User.findOne({where: { email: req.body.email }});
+
     req.session.save(() => {
       req.session.loggedIn = true;
+      req.session.user_id = userData_found.id
       res.status(200).json(userData);
     });
 
@@ -104,7 +107,8 @@ router.get('/:id', async (req, res) => {
     }
     const user = userData.get({ plain: true});
     // console.log(user)
-    res.render('user', {user});
+    res.status(200).json(userData)
+    // res.render('user', {user});
   } catch (err) {
     res.status(500).json(err);
   }
@@ -229,9 +233,10 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.save(() => {
+      req.session.email = req.body.email
       req.session.user_id = userData.id;
       req.session.weight = userData.weight;
-      req.session.preferences = userData.categories;
+      // req.session.preferences = userData.categories;
       req.session.loggedIn = true;
     res.status(200).json({ message: 'You are now logged in!' })
   });
