@@ -6,7 +6,7 @@ html, body {
        box-sizing: border-box;
   height: 100%;
   width: 100%; 
-  background: rgb(53, 51, 51);
+  background: rgb(32, 30, 30);
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }
@@ -40,10 +40,11 @@ html, body {
   box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.card-title {
+.card-title, h2{
   margin-top:0px;
   font-weight: 700;
   font-size: 1.65em;
+  color: rgb(230, 198, 111);
 }
 .card-title a {
   color: #000;
@@ -59,19 +60,30 @@ html, body {
   text-transform: uppercase
 }
 
-.img-card {
+.recommendations-div{
+  width:60%;
+  height: 100px;
+  position: center;
+}
+
+.img-card, bd-example-card-bod {
   width: 100%;
-  height:200px;
+  height:auto;
   border-top-left-radius:2px;
   border-top-right-radius:2px;
   display:block;
-    overflow: hidden;
+  overflow: hidden;
+  text-align: center;
+  color: grey;
+
 }
-.img-card img{
+.img-card img, bd-example-card-bod{
   width: 100%;
   height: 200px;
   object-fit:cover; 
   transition: all .25s ease;
+  text-align: center;
+  color: grey;
 }
 
 .subtitle {
@@ -86,9 +98,10 @@ img {
   vertical-align: center;
   border-style: none;
 }
-img {
-  max-width: 75%;
+img, bd-example-card-bod {
+  max-width: %;
   height: auto;
+  vertical-align: center;
 }
 
 .footer {
@@ -108,13 +121,6 @@ img {
   .topnav a {
     float: none;
     width: 100%;
-}
-
-.footer {
-  padding: 20px;
-  text-align: center;
-  background: #ddd;
-  margin-top: 20px;
 }
 
 @media screen and (max-width: 800px) {
