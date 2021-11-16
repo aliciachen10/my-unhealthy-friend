@@ -26,6 +26,12 @@ const categoryData = [
 {
     category_name: 'thai',
 },
+{
+    category_name: 'japanese',
+},
+{
+    category_name: 'irish',
+},
 
 ];
 

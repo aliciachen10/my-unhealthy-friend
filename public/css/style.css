@@ -70,6 +70,21 @@ html, body {
   position: center;
 }
 
+.pref-row {
+  justify-content: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+}
+
+.food-choice-cartoon {
+  display: flex;
+  justify-content: center;
+}
+
 .img-card, bd-example-card-bod {
   width: 100%;
   height:auto;
@@ -80,6 +95,11 @@ html, body {
   text-align: center;
   color: grey;
 
+}
+
+.custom-control-label{
+  color: white;
+  font-size: 20px;
 }
 .img-card img, bd-example-card-bod{
   width: 100%;

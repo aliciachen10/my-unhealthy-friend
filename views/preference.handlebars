@@ -2,34 +2,63 @@
 
 
 <div class="container"> 
-
-    <div class="custom-control custom-checkbox">
+  <div class="row pref-row"> 
+    <div class="col-md-3 custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" name="preference" value="thai" id="thai">
         <label class="custom-control-label" for="customCheck1">Thai</label>
       </div>
-      <div class="custom-control custom-checkbox">
+      <div class="col-md-3 custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" name="preference" value="french" id="french">
         <label class="custom-control-label" for="customCheck1">French</label>
       </div>
-      <div class="custom-control custom-checkbox">
+      <div class="col-md-3 custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input"  name="preference" value="chinese" id="chinese">
         <label class="custom-control-label" for="customCheck1">Chinese</label>
       </div>
-      <div class="custom-control custom-checkbox">
+    </div>
+    <div class="row pref-row"> 
+      <div class="col-md-3 custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" name="preference" value="mexican" id="mexican">
         <label class="custom-control-label" for="customCheck1">Mexican</label>
       </div>
-      <div class="custom-control custom-checkbox">
+      <div class="col-md-3 custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" name="preference" value="italian" id="italian">
         <label class="custom-control-label" for="customCheck1">Italian</label>
       </div>
-       <div> 
-          <button type="submit" id="preference-submit" class=" btn-style">Submit Preferences</button>
+       <div class="col-md-3 custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="preference" value="fast-food" id="fast-food">
+        <label class="custom-control-label" for="customCheck1">Fast-food</label>
+      </div>
+       </div>
+       <div class="row pref-row"> 
+       <div class="col-md-3 custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="preference" value="indian" id="indian">
+        <label class="custom-control-label" for="customCheck1">Indian</label>
+      </div>
+       <div class="col-md-3 custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="preference" value="japanese" id="japanese">
+        <label class="custom-control-label" for="customCheck1">Japanese</label>
+      </div>
+       <div class="col-md-3 custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="preference" value="irish" id="irish">
+        <label class="custom-control-label" for="customCheck1">Irish</label>
+      </div>
+      </div>
+      <div class="row"> 
+
+       <div class="button-container"> 
+          <button type="submit" id="preference-submit" class=" col-md-3 btn-style btn-primary">Submit Preferences</button>
+        </div>
         </div>
 
+
+<div class="food-choice-cartoon"> 
+<lottie-player src="https://assets4.lottiefiles.com/packages/lf20_tll0j4bb.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
         {{user_id}}
       
+      </div>
 </div>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 {{!-- <script src="./js/add-preference.js"></script> --}}
 
 
