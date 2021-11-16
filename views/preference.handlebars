@@ -47,21 +47,20 @@
       <div class="row"> 
 
        <div class="button-container"> 
-          <button type="submit" id="preference-submit" class=" col-md-3 btn-style btn-primary">Submit Preferences</button>
+          <form action="/app">
+            <input type="submit" value="Submit preferences" class="btn btn-primary"/>
+          </form>
         </div>
         </div>
 
 
 <div class="food-choice-cartoon"> 
 <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_tll0j4bb.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
-        {{user_id}}
       
       </div>
 </div>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 {{!-- <script src="./js/add-preference.js"></script> --}}
-
-{{user_id}}
 
 <script>
   var userId = {{user_id}};
@@ -98,16 +97,29 @@
             category_id = 5
            preferenceDbAdd(5);
            
-        } else if (preferenceSelections[i] === 'mexican') {
+        } else if (preferenceSelections[i] === 'fast-food') {
             category_id = 6
            preferenceDbAdd(6);
-            
-        } else {
-            //thai
+
+        } else if (preferenceSelections[i] === 'mexican') {
             category_id = 7
            preferenceDbAdd(7);
-          
+
+        } else if (preferenceSelections[i] === 'thai') {
+            category_id = 8
+           preferenceDbAdd(8);
+
+        } else if (preferenceSelections[i] === 'japanese') {
+            category_id = 9
+           preferenceDbAdd(9);
+
+        } else {
+          //irish
+            category_id = 10
+           preferenceDbAdd(10);
+
         }
+      
     }     
 
     console.log("preferenceSelections>>>", preferenceSelections)
