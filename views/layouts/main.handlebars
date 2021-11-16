@@ -29,7 +29,15 @@
         </li> --}}
       </ul>
     </div>
+
+    {{#if loggedIn}}
     <button id="logout" class="btn btn-primary" type="click">LOGOUT</button>
+    {{else}}
+    {{!-- <button id="login" class="btn btn-primary" type="click">LOGIN</button> --}}
+    <form action="/login">
+      <input type="submit" value="Login" class="btn btn-primary"/>
+    </form>
+    {{/if}}
   </nav>
   <div class="flex-column justify-space-around">
     {{!-- <header class="display-flex justify-space-between align-center p-2">

@@ -11,6 +11,10 @@ html, body {
   font-weight: 400;
 }
  
+.carousel-item {
+  height: 450px;
+}
+
 .wrapper {
   display: table;
   height: 100%;

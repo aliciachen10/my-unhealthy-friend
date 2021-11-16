@@ -49,10 +49,6 @@ router.get('/app', async (req, res) => {
   
 });
 
-// sentencesList: function() {
-//   return Session.get(SENTENCES).reverse();
-// }
-
 // Login route
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect to the homepage
@@ -65,11 +61,14 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/preference', (req, res) => {
-  
+  try {
     res.render('preference', {
       loggedIn: req.session.loggedIn,
       user_id: req.session.user_id
     })
+  } catch (err) {
+    res.status(500).json(err)
+  }
   
 });
 
