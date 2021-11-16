@@ -1,9 +1,161 @@
 * {
   box-sizing: border-box;
 }
+html, body {
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+  height: 100%;
+  width: 100%; 
+  background: rgb(32, 30, 30);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+ 
+.wrapper {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.container-fostrap {
+  display: table-cell;
+  padding: 1em;
+  text-align: center;
+  vertical-align: middle;
+}
+.fostrap-logo {
+  width: 100px;
+  margin-bottom:15px
+}
+.login-card {
+  display: block; 
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: grey;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12); 
+    transition: box-shadow .25s; 
+}
 
-body {
-  font-family: Arial;
-  padding: 5px;
-  background: grey;
+.login-card:hover {
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.card-title, h2{
+  margin-top:0px;
+  font-weight: 700;
+  font-size: 1.65em;
+  color: rgb(230, 198, 111);
+}
+.card-title a {
+  color: #000;
+  text-decoration: none !important;
+}
+.card-read-more {
+  border-top: 1px solid #D4D4D4;
+}
+.card-read-more a {
+  text-decoration: none !important;
+  padding:10px;
+  font-weight:600;
+  text-transform: uppercase
+}
+
+.recommendations-div{
+  width:60%;
+  height: 100px;
+  position: center;
+}
+
+.img-card, bd-example-card-bod {
+  width: 100%;
+  height:auto;
+  border-top-left-radius:2px;
+  border-top-right-radius:2px;
+  display:block;
+  overflow: hidden;
+  text-align: center;
+  color: grey;
+
+}
+.img-card img, bd-example-card-bod{
+  width: 100%;
+  height: 200px;
+  object-fit:cover; 
+  transition: all .25s ease;
+  text-align: center;
+  color: grey;
+}
+
+.subtitle {
+  background-color: #0d486d;
+  font-size: 48px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+img {
+  vertical-align: center;
+  border-style: none;
+}
+img, bd-example-card-bod {
+  max-width: %;
+  height: auto;
+  vertical-align: center;
+}
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+}
+
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+}
+
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+}
+
+@media (min-width: 450px) {
+  h1.heading {
+    font-size: 3.55em;
+}
+@media (min-width: 760px) {
+  h1.heading {
+    font-size: 3.05em;
+}
+
+@media (min-width: 900px) {
+  h1.heading {
+    font-size: 3.25em;
+    margin: 0 0 0.3em;
+  }
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
+.weather-image {
+  display:inline;
+  width: 100px;
+  height: 100px;
 }
