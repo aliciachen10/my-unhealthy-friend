@@ -210,7 +210,8 @@ router.delete('/:id', async (req, res) => {
 router.post('/login', async (req, res) => {
   console.log("console log req.body", req.body)
   try {
-    const userData = await User.findOne({include: [{ model: Category }], where: { email: req.body.email }});
+    const userData = await User.findOne({include: [{ model: Category }], 
+      where: { email: req.body.email }});
     console.log("userData>>>", userData)
     
     //collect the user's preferences in a user_preferences array here so that we can pass that as a property of the session
@@ -225,17 +226,17 @@ router.post('/login', async (req, res) => {
       return;
     }
   
-    const validPassword = await bcrypt.compare(
-      req.body.password,
-      userData.password
-    );
+    // const validPassword = await bcrypt.compare(
+    //   req.body.password,
+    //   userData.password
+    // );
 
-    console.log("validpassword>>>>", validPassword)
+    // console.log("validpassword>>>>", validPassword)
   
-    if (!validPassword) {
-      res.status(400).json({ message: '2Login failed. Please try again!' });
-      return;
-    }
+    // if (!validPassword) {
+    //   res.status(400).json({ message: '2Login failed. Please try again!' });
+    //   return;
+    // }
 
     req.session.save(() => {
       req.session.email = req.body.email
