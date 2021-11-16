@@ -84,7 +84,6 @@ router.post("/", async (req, res) => {
     //preference_array should return an array that looks like this: ['italian', 'chinese', 'american', 'mexican']
     let preference_array = [];
     req.session.preferences.forEach(entry => preference_array.push(entry.category_name))
-    console.log(preference_array)
 
     //get a random entry from the user preference array 
     let chooseRandomPreference = Math.floor(Math.random() * preference_array.length);

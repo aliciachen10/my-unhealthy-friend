@@ -93,7 +93,7 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
   const exercise_type = document.querySelector("#exercise-type").value;
   let activity_id;
   // const user_id = 2;
-  type === "running") {
+  if (exercise_type === "running") {
     activity_id = 1;
   } else if (exercise_type === "cycling") {
     activity_id = 2;
@@ -114,6 +114,7 @@ Andrew, don't worry about doing this. The reason this script is in here is for r
     },
   });
   const formattedResponse = await response.json();
+  console.log("formattedResponse>>>>>", formattedResponse)
   const recommendation_div = document.querySelector(".recommendations-div");
   let final_recommendations = [];
   //filter the entries by calories manually
