@@ -124,11 +124,12 @@
 
     console.log("preferenceSelections>>>", preferenceSelections)
 async function preferenceDbAdd(category_id) {
+  console.log("what user is this preference being logged for? userId", userId)
       const response = await fetch(`/api/preferences/`, {
         method: "POST",
         body: JSON.stringify({
           category_id: category_id,
-          user_id: userId
+          user_id: 1
         }),
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +138,7 @@ async function preferenceDbAdd(category_id) {
         if (response.ok) {
       document.location.replace('/app');
     } else {
-      alert('Failed to log in.');
+      alert('Failed to log preference.');
     }
 
 }
