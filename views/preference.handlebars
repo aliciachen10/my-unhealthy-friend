@@ -121,11 +121,9 @@
         }
       
     }     
-    console.log("here's the userid", userId)
-    console.log("preferenceSelections>>>", preferenceSelections)
+
 async function preferenceDbAdd(category_id) {
-  console.log("is it going into this async function at all?")
-  console.log("what user is this preference being logged for? userId", userId)
+  console.log('heres the category id - confirming that this logged', category_id)
       const response = await fetch(`/api/preferences/`, {
         method: "POST",
         body: JSON.stringify({
@@ -136,6 +134,8 @@ async function preferenceDbAdd(category_id) {
           "Content-Type": "application/json",
         },
       });
+      console.log("we are console logging the response.body", response.body)
+      
         if (response.ok) {
       document.location.replace('/app');
     } else {
