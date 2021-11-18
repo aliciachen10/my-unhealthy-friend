@@ -125,7 +125,9 @@
 //it is going into the async function
 //for some reason it's not correctly hitting the api. so const response = is where it messes up
 //it's returning a 400, which means a client side error 
-//it is a client-side error, so is it logging as a string? category_id or userId is that a string when it shouldn't be? 
+//the solution: we need to seed our db in order to successfully add a preference! we need to at least seed the categories table.
+//"Cannot add or update a child row: a foreign key constraint fails (`vxdr1peb850z9fj4`.`preference`, CONSTRAINT `preference_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)" 
+//stackoverflow link: https://stackoverflow.com/questions/21659691/error-1452-cannot-add-or-update-a-child-row-a-foreign-key-constraint-fails
 async function preferenceDbAdd(category_id) {
       const response = await fetch(`/api/preferences/`, {
         method: "POST",
@@ -139,13 +141,10 @@ async function preferenceDbAdd(category_id) {
       });
       const content = await response.json();
 
-      console.log("console logging what was logged to the db", content)
-
       //try doing it using .then
 
         if (response.ok) {
-          console.log("success")
-      //document.location.replace('/app');
+      document.location.replace('/app');
     } else {
       alert('Failed to log preference.');
     }
