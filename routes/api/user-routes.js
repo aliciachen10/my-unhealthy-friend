@@ -214,29 +214,29 @@ router.post('/login', async (req, res) => {
       where: { email: req.body.email }});
     console.log("userData>>>", userData)
     
-    //collect the user's preferences in a user_preferences array here so that we can pass that as a property of the session
-    const user_preferences = [];
-    for (var i = 0; i < userData.categories.length; i++) {
-      user_preferences.push(userData.categories[i].category_name)
-    }
-
     if (!userData) {
       
       res.status(404).json({ message: '1Login failed. Please try again!' });
       return;
     }
   
-    // const validPassword = await bcrypt.compare(
-    //   req.body.password,
-    //   userData.password
-    // );
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      userData.password
+    );
+      //try doing something with checkPassword
+    // const validPassword = await userData.checkPassword(req.body.password);
 
-    // console.log("validpassword>>>>", validPassword)
+      //we know that validpassword is false here... bcrypt is telling us that it's false 
+      //look into it here: https://stackoverflow.com/questions/46022956/bcrypt-nodejs-compare-returns-false-whatever-the-password/50537073
+      console.log("here's the user's email", req.body.email)
+      console.log("here's the user's password", req.body.password)
+    console.log("validpassword>>>>", validPassword)
   
-    // if (!validPassword) {
-    //   res.status(400).json({ message: '2Login failed. Please try again!' });
-    //   return;
-    // }
+    if (!validPassword) {
+      res.status(400).json({ message: '2Login failed. Please try again!' });
+      return;
+    }
 
     req.session.save(() => {
       req.session.email = req.body.email

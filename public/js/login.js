@@ -15,10 +15,13 @@ const loginFormHandler = async (event) => {
         'Content-Type': 'application/json'
       },
     });
+    const content = await response.json();
+    console.log("logging error message from the failed post request", content)
+    
     if (response.ok) {
       document.location.replace('/app');
     } else {
-      alert('Failed to sign up.');
+      alert('Failed to log in.');
     }
   }
 };
