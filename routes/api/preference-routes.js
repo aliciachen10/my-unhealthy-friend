@@ -28,7 +28,36 @@ router.post('/', async (req, res) => {
       // height: req.body.height,
       // weight: req.body.weight
     });
-    res.status(200).json(preferenceData);
+
+    //check this
+    // const userData = await User.findOne({include: [{ model: Category }], where: { id: req.session.user_id }});
+
+    // req.session.save(() => {
+    //   req.session.loggedIn = true;
+      // req.session.preferences = userData.categories;
+    // });
+    console.log("THIS IS THE REQUEST BODY", req.body)
+    res.status(200).json({preferenceData});
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+// create new preference by user id
+router.post('/:user_id', async (req, res) => {
+  //format for this request: 
+//   {
+//     "user_id": 3,
+//     "category_id": 6
+// }
+  try {
+    const preferenceData = await Preference.create({
+      user_id: req.params.user_id,
+      category_id: req.body.category_id
+      // height: req.body.height,
+      // weight: req.body.weight
+    });
+    res.status(200).json({preferenceData});
   } catch (err) {
     res.status(400).json(err);
   }

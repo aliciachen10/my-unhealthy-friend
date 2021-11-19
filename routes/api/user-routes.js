@@ -2,23 +2,44 @@ const router = require('express').Router();
 const { unsubscribe } = require('.');
 const { Exercise, User, Activity, Category, Preference } = require('../../models');
 const bcrypt = require('bcrypt');
+const withAuth = require('../../utils/auth');
 
 // The `/api/users` endpoint
 
 //get all users, with their exercises and preferences
+// router.get('/', async (req, res) => {
+//   try {
+//     const userData = await User.findAll({
+//       include: [{ model: Exercise }, { model: Category }],
+//     });
+//     // res.status(200).json(userData);
+//     const users = userData.map((user) => user.get({ plain: true }));
+//     // res.render('users', { users });
+//     res.status(200).json(userData)
+//     // console.log(req.session.loggedIn)
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+
+//new route to get user with exercises
+// Use withAuth middleware to prevent access to route
 router.get('/', async (req, res) => {
   try {
-    const userData = await User.findAll({
-      include: [{ model: Exercise }, { model: Category }],
+    // Find the logged in user based on the session ID
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: Exercise }, {model: Category}],
     });
-    res.status(200).json(userData);
-    const users = userData.map((user) => user.get({ plain: true }));
-    console.log("here are users ", users)
-    res.render('users', { users })
+
+    const user = userData.get({ plain: true });
+    res.render('all', {
+      ...user,
+      logged_in: true
+    });
   } catch (err) {
     res.status(500).json(err);
   }
-  
 });
 
 router.get('/exercises', async (req, res) => {
@@ -28,8 +49,7 @@ router.get('/exercises', async (req, res) => {
     });
     res.status(200).json(userData);
     const users = userData.map((user) => user.get({ plain: true }));
-    console.log("here are users ", users)
-    res.render('users', { users })
+    res.render('users', { users});
   } catch (err) {
     res.status(500).json(err);
   }
@@ -74,7 +94,16 @@ router.post('/', async (req, res) => {
       email: req.body.email,
       password: req.body.password 
     });
-    res.status(200).json(userData);
+
+    const userData_found = await User.findOne({where: { email: req.body.email }});
+
+    req.session.save(() => {
+      req.session.loggedIn = true;
+      req.session.user_id = userData_found.id
+      req.session.weight = userData_found.weight;
+      res.status(200).json(userData);
+    });
+
   } catch (err) {
     res.status(400).json(err);
   }
@@ -94,8 +123,9 @@ router.get('/:id', async (req, res) => {
       return;
     }
     const user = userData.get({ plain: true});
-    console.log(user)
-    res.render('user', user);
+    // console.log(user)
+    res.status(200).json(userData)
+    // res.render('user', {user});
   } catch (err) {
     res.status(500).json(err);
   }
@@ -150,7 +180,7 @@ router.get('/:user_id/preferences', async (req, res) => {
   }
 });
 
-//get all exercises by user id
+//get all exercises by user id -- this what will display the exercise history for each user! 
 router.get('/:user_id/exercises', async (req, res) => {
   // find a user tag by its `id`
   // be sure to include its associated exercise and preference data
@@ -195,10 +225,12 @@ router.delete('/:id', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
+  console.log("console log req.body", req.body)
   try {
-    // we search the DB for a user with the provided email
-    const userData = await User.findOne({ where: { email: req.body.email } });
-    console.log(userData)
+    const userData = await User.findOne({include: [{ model: Category }], 
+      where: { email: req.body.email }});
+    console.log("userData>>>", userData)
+    
     if (!userData) {
       // the error message shouldn't specify if the login failed because of wrong email or password
       //I put 1 before login so we know which one is failing
@@ -212,21 +244,44 @@ router.post('/login', async (req, res) => {
       req.body.password,
       userData.password
     );
-    console.log(req.body.password)
-    console.log(userData.password)
-    console.log(validPassword)
-    //I'm getting valid password as false when they are the same. Use insomonia and use the consolelogs above
-    //to see what I'm talking about here. 
-    // if they do not match, return error message
+      //try doing something with checkPassword
+    // const validPassword = await userData.checkPassword(req.body.password);
+
+      //we know that validpassword is false here... bcrypt is telling us that it's false 
+      //look into it here: https://stackoverflow.com/questions/46022956/bcrypt-nodejs-compare-returns-false-whatever-the-password/50537073
+      console.log("here's the user's email", req.body.email)
+      console.log("here's the user's password", req.body.password)
+    console.log("validpassword>>>>", validPassword)
+  
     if (!validPassword) {
       res.status(400).json({ message: '2Login failed. Please try again!' });
       return;
     }
-    // if they do match, return success message
-    res.status(200).json({ message: 'You are now logged in!' });
+
+    req.session.save(() => {
+      req.session.email = req.body.email
+      req.session.user_id = userData.id;
+      req.session.weight = userData.weight;
+      // req.session.preferences = userData.categories;
+      req.session.loggedIn = true;
+    
+    res.status(200).json({ message: 'You are now logged in!' })
+  });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
+
+
 
 module.exports = router;

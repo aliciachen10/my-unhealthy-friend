@@ -3,8 +3,8 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./routes');
-// const helpers = require('./utils/helpers');
-
+const helpers = require('./utils/helpers');
+const dotenv = require('dotenv').config()
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 
 
 const sess = {
-  secret: 'Super secret secret',
+  secret: process.env.SESSION_SECRET || 'secret',
   cookie: {},
   resave: false,
   saveUninitialized: true,
@@ -31,7 +31,7 @@ app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); //this means we do not use /public/ when linking /css/style.css
 
 app.use(routes);
 

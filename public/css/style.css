@@ -1,22 +1,25 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
-
-html,
-body {
+* {
+  box-sizing: border-box;
+}
+html, body {
   -moz-box-sizing: border-box;
        box-sizing: border-box;
   height: 100%;
   width: 100%; 
-  background: #FFF;
+  background: rgb(32, 30, 30);
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }
  
+.carousel-item {
+  height: 450px;
+}
+
 .wrapper {
   display: table;
   height: 100%;
   width: 100%;
 }
-
 .container-fostrap {
   display: table-cell;
   padding: 1em;
@@ -27,63 +30,25 @@ body {
   width: 100px;
   margin-bottom:15px
 }
-h1.heading {
-  color: #fff;
-  font-size: 1.15em;
-  font-weight: 900;
-  margin: 0 0 0.5em;
-  color: #505050;
-}
-@media (min-width: 450px) {
-  h1.heading {
-    font-size: 3.55em;
-  }
-}
-@media (min-width: 760px) {
-  h1.heading {
-    font-size: 3.05em;
-  }
-}
-@media (min-width: 900px) {
-  h1.heading {
-    font-size: 3.25em;
-    margin: 0 0 0.3em;
-  }
-} 
-.card {
+.login-card {
   display: block; 
     margin-bottom: 20px;
     line-height: 1.42857143;
-    background-color: #fff;
-    border-radius: 2px;
+    background-color: grey;
+    border-radius: 5px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12); 
     transition: box-shadow .25s; 
 }
-.card:hover {
+
+.login-card:hover {
   box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
-.img-card {
-  width: 100%;
-  height:200px;
-  border-top-left-radius:2px;
-  border-top-right-radius:2px;
-  display:block;
-    overflow: hidden;
-}
-.img-card img{
-  width: 100%;
-  height: 200px;
-  object-fit:cover; 
-  transition: all .25s ease;
-} 
-.card-content {
-  padding:15px;
-  text-align:left;
-}
-.card-title {
+
+.card-title, h2{
   margin-top:0px;
   font-weight: 700;
   font-size: 1.65em;
+  color: rgb(230, 198, 111);
 }
 .card-title a {
   color: #000;
@@ -99,14 +64,50 @@ h1.heading {
   text-transform: uppercase
 }
 
-.hero {
-  height: 300px;
+.recommendations-div{
+  width:60%;
+  height: 100px;
+  position: center;
+}
+
+.pref-row {
+  justify-content: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+}
+
+.food-choice-cartoon {
+  display: flex;
+  justify-content: center;
+}
+
+.img-card, bd-example-card-bod {
   width: 100%;
-  margin-bottom: 25px;
-  background-image: url("./assets/images/bg-masthead.jpg"); 
-  background-size: cover;
-  background-position: center;
-  position: relative;
+  height:auto;
+  border-top-left-radius:2px;
+  border-top-right-radius:2px;
+  display:block;
+  overflow: hidden;
+  text-align: center;
+  color: grey;
+
+}
+
+.custom-control-label{
+  color: white;
+  font-size: 20px;
+}
+.img-card img, bd-example-card-bod{
+  width: 100%;
+  height: 200px;
+  object-fit:cover; 
+  transition: all .25s ease;
+  text-align: center;
+  color: grey;
 }
 
 .subtitle {
@@ -117,65 +118,70 @@ h1.heading {
   right: 20px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-
 img {
-  vertical-align: middle;
+  vertical-align: center;
   border-style: none;
 }
-
-img {
+img, bd-example-card-bod {
   max-width: 100%;
   height: auto;
+  vertical-align: center;
 }
 
-.hero-text {
+.footer {
+  padding: 20px;
   text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-}
-.hero-hero {
-  height: 300px;
-  width: 100%;
+  background: #ddd;
+  margin-top: 20px;
 }
 
-.hero-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("assets/images/bg-masthead.jpg");
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+}}
 
-  /* Set a specific height */
-  height: 50%;
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+}}
 
-  /* Position and center the image to scale nicely on all screens */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+  }
 }
 
-/*CONTACT LIST STYLING*/ 
-.contact-list li {
-  border-bottom: 5px solid #0072bb;
-  list-style-type: none;
-  font-size: 200%;
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+}
+
+@media (min-width: 450px) {
+  h1.heading {
+    font-size: 3.55em;
+}}
+
+@media (min-width: 760px) {
+  h1.heading {
+    font-size: 3.05em;
+}}
+
+@media (min-width: 900px) {
+  h1.heading {
+    font-size: 3.25em;
+    margin: 0 0 0.3em;
+  }
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
+.weather-image {
   display: inline;
-  margin-right: 2%;
-  margin-left: 2%;
+  width: 100px;
+  height: 100px;
 }
-
-.contact-list li:hover {
-  background-color: #0072bb;
-}
-
-/* body {
-  background-color: #d9dcd6;
-}
-
-html {
-  background-color: #d9dcd6;
-} */
-/* .bg-light {
-  background-color: #f8f9fa!important; 
-  background-color: rgb(89, 134, 194)!important;
-} */

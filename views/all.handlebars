@@ -4,100 +4,97 @@
   integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
   crossorigin="anonymous"
 />
-<link href="../public/css/style.css" rel="stylesheet" />
-<div class="menu-container">
+<link href="style.css" rel="stylesheet" />
+<style>
+body {
+  background-color: white !important;
+}
 
-  <div class="RECOMMENDATIONS-DIV">
-    recommendations below
-  {{recommendations.foodName}} 
-  {{#each recommendations as |recommendation|}}
-    {{recommendation.foodName}}
-  {{/each}} 
+</style>
+{{#if loggedIn}}
+  <div class="menu-container">
+    <div class="card-header col-md-12 text-center">
+      <h2>
+        🏋️ Find your weakness 🍔
+      </h2>
+    </div>
+    <div class="container">
+      <div class="row">
+        <!-- This is the form for adding a new exercise -->
+        <div class="card add-exercise-container col-md-4">
+          <h2>
+            ENTER ACTIVITY
+          </h2>
+          <form class="new-exercise-form">
+            <label for="exercise-type">Exercise Type:</label>
+            <select name="exercise-type" id="exercise-type">
+              <option value="running">RUNNING</option>
+              <option value="swimming">SWIMMING</option>
+              <option value="cycling">CYCLING</option>
+            </select>
+            <br />
+            <label for="distance">
+              DISTANCE (miles):
+            </label>
+            <textarea
+              id="distance"
+              name="distance"
+              rows="1"
+              cols="10"
+            ></textarea>
+            <label for="duration">
+              DURATION (mins):
+            </label>
+            <textarea
+              id="duration"
+              name="duration"
+              rows="1"
+              cols="10"
+            ></textarea>
+            <br />
+            <br />
+            <button type="submit" value="Submit" class="btn btn-primary">
+              SUBMIT
+            </button>
+          </form>
+          
+        </div>
+        <div class="recommendations-div">
+            {{recommendations}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clear-class">
+    {{#each exercises as |exercise|}}
+      <div class="card exercise col-md-4">
+        <div class="card-content">
+          <h4 class="card-title">
+            <a href="http://aliciachen10.github.io/weather-dashboard">
+              ACTIVITY
+            </a>
+          </h4>
+          <p class="">
+            <p>User ID: {{exercise.user_id}}</p>
+            <p>Distance: {{exercise.distance}} miles</p>
+            <p>Duration: {{exercise.duration}} minutes</p>
+            <p>Calories burned: {{exercise.calories_burned}} kCal</p>
+            <p class="exTime">{{exercise.createdAt}}</p>
+          </p>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  <a href="/login">You must login first to view this page</a>
+{{/if}}
+<!--TO DO: this entire script file needs to be put back into the add-exercise.js after troubleshooting with instructor on Tuesday
+Andrew, don't worry about doing this. The reason this script is in here is for reasons I can explain to you later-->
+<script>
+
+
+
+  var userId = {{user_id}};
   
-</div>
-
-  <div class="card-header col-md-12 text-center">
-    <h2>
-      🏋️ Exercise History
-    </h2>
-  </div>
-
-  <!-- This is the form for adding a new exercise -->
-  <div class="card add-exercise-container col-md-4">
-    <h2>
-      Log your exercise here:
-    </h2>
-    <form class="new-exercise-form">
-
-      <label for="exercise-type">Choose an exercise type:</label>
-      <select name="exercise-type" id="exercise-type">
-        <option value="running">Running</option>
-        <option value="swimming">Swimming</option>
-        <option value="cycling">Cycling</option>
-      </select>
-      <br />
-      <label for="distance">
-        exercise distance (in miles):
-      </label>
-      <textarea id="distance" name="distance" rows="1" cols="10"></textarea>
-      <label for="duration">
-        exercise duration (in minutes):
-      </label>
-      <textarea id="duration" name="duration" rows="1" cols="10"></textarea>
-      <br />
-      <label for="weight">
-        Current weight (in kg):
-      </label>
-      <br />
-      <textarea id="weight" name="weight" rows="1" cols="10"></textarea>
-      <br />
-      <br />
-      {{!-- <br />
-      {{#if has_nuts}}
-        <input type="checkbox" id="has_nuts" name="has_nuts" checked />
-      {{else}}
-        <input type="checkbox" id="has_nuts" name="has_nuts" />
-      {{/if}}
-      <label for="has_nuts">
-        Check box if this exercise contains nuts
-      </label> --}}
-      <br />
-      <button type="submit" value="Submit" class="btn btn-primary">
-        Submit
-      </button>
-    </form>
-  </div>
-</div>
-
-{{#each exercises as |exercise|}}
-  <div class="card exercise col-md-4">
-    {{! <img
-          src="https://c.ndtvimg.com/2020-08/dtm9edd8_cycling_625x300_05_August_20.jpg"
-        /> }}
-    <div class="card-content">
-      <h4 class="card-title">
-        <a href="http://aliciachen10.github.io/weather-dashboard">
-          Activity
-        </a>
-      </h4>
-      <p class="">
-        {{!-- <p>ID: {{exercise.id}}.</p> --}}
-        <p>Distance: {{exercise.distance}} miles</p>
-        <p>Duration: {{exercise.duration}} minutes</p>
-        <p>Calories burned: {{exercise.calories_burned}} kCal</p>
-        <p>When you did it: {{exercise.createdAt}}</p>
-      </p>
-    </div>
-    <div class="card-read-more">
-      <a
-        href="http://github.com/aliciachen10/weather-dashboard"
-        class="btn btn-link btn-block"
-      >
-        Get suggestions
-      </a>
-    </div>
-  </div>
-
-{{/each}}
-
+</script>
 <script src="/js/add-exercise.js"></script>

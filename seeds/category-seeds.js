@@ -18,13 +18,19 @@ const categoryData = [
     category_name: 'indian',
 },
 {
-    category_name: 'fast food',
+    category_name: 'fast-food',
 },
 {
     category_name: 'mexican',
 },
 {
     category_name: 'thai',
+},
+{
+    category_name: 'japanese',
+},
+{
+    category_name: 'irish',
 },
 
 ];
