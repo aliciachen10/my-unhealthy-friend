@@ -2,7 +2,7 @@
 the best anti - my fitness pal app of all time. My Unhealthy Friend allows a user to find dietary options that fit their lifestyle and personal preferences. It uses activity data and user supplied preferences in order to provide possible meal choices, keeping within calorie expenditure. 
 
 ## how to use the app
-This app is deployed on Heroku [here](https://murmuring-depths-69285.herokuapp.com/) feel free to [contact us](mailto:aliciachen10 at gmail dot com) with questions, comments, concerns, or bugs. Alternatively, you can also:
+This app is deployed on Heroku [here](https://murmuring-depths-69285.herokuapp.com/) feel free to contact us with questions, comments, concerns, or bugs. Alternatively, you can also:
 1. git clone this repo
 2. npm install in your integrated terminal
 3. mysql -u root -p 
