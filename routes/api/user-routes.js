@@ -56,6 +56,22 @@ router.get('/exercises', async (req, res) => {
   
 });
 
+//get all users, with their exercises and preferences
+// router.get('/exercises', async (req, res) => {
+//   try {
+//     const exerciseData = await Exercise.findAll({
+//       // include: [{ model: User }, { model: Activity }],
+//     });
+//     console.log("myexercisedata >>>>", exerciseData)
+//     // res.status(200).json(userData);
+//     const exercise = exerciseData.map((exercise) => exercise.get({ plain: true }));
+//     console.log("here are exercises ", exercise)
+//     // res.render('all', { exercise })
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+  
+// });
 
 //create a new user
 router.post('/', async (req, res) => {
@@ -66,7 +82,7 @@ router.post('/', async (req, res) => {
   //   "weight": 175
 // }
   try {
-    
+
     const newUser = req.body
     newUser.password = await bcrypt.hash(req.body.password, 10);
 
@@ -121,6 +137,7 @@ router.put('/:id', async (req, res) => {
 //   {
 //     "weight": 180
 // }
+console.log(req.body)
   try {
     const userData = await User.update(req.body, {
       where: {
@@ -215,11 +232,14 @@ router.post('/login', async (req, res) => {
     console.log("userData>>>", userData)
     
     if (!userData) {
-      
+      // the error message shouldn't specify if the login failed because of wrong email or password
+      //I put 1 before login so we know which one is failing
       res.status(404).json({ message: '1Login failed. Please try again!' });
       return;
     }
-  
+    // use `bcrypt.compare()` to compare the provided password and the hashed password
+    //I don't think the below compare is working because the passwords are the same but we still
+    // get the next error message
     const validPassword = await bcrypt.compare(
       req.body.password,
       userData.password
