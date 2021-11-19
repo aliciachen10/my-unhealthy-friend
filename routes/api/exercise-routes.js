@@ -14,7 +14,6 @@ const withAuth = require('../../utils/auth');
 
 //working function
 async function edamamData(calories_burned, preference) {
-
   try { //use an await on the get request and an await on the response 
 
     const calories_burned_rounded = Math.round(Math.floor(calories_burned));
