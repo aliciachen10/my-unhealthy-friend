@@ -56,6 +56,22 @@ router.get('/exercises', async (req, res) => {
   
 });
 
+//get all users, with their exercises and preferences
+// router.get('/exercises', async (req, res) => {
+//   try {
+//     const exerciseData = await Exercise.findAll({
+//       // include: [{ model: User }, { model: Activity }],
+//     });
+//     console.log("myexercisedata >>>>", exerciseData)
+//     // res.status(200).json(userData);
+//     const exercise = exerciseData.map((exercise) => exercise.get({ plain: true }));
+//     console.log("here are exercises ", exercise)
+//     // res.render('all', { exercise })
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+  
+// });
 
 //create a new user
 router.post('/', async (req, res) => {
@@ -66,7 +82,7 @@ router.post('/', async (req, res) => {
   //   "weight": 175
 // }
   try {
-    
+
     const newUser = req.body
     newUser.password = await bcrypt.hash(req.body.password, 10);
 
@@ -121,6 +137,7 @@ router.put('/:id', async (req, res) => {
 //   {
 //     "weight": 180
 // }
+console.log(req.body)
   try {
     const userData = await User.update(req.body, {
       where: {
@@ -214,29 +231,32 @@ router.post('/login', async (req, res) => {
       where: { email: req.body.email }});
     console.log("userData>>>", userData)
     
-    //collect the user's preferences in a user_preferences array here so that we can pass that as a property of the session
-    const user_preferences = [];
-    for (var i = 0; i < userData.categories.length; i++) {
-      user_preferences.push(userData.categories[i].category_name)
-    }
-
     if (!userData) {
-      
+      // the error message shouldn't specify if the login failed because of wrong email or password
+      //I put 1 before login so we know which one is failing
       res.status(404).json({ message: '1Login failed. Please try again!' });
       return;
     }
-  
-    // const validPassword = await bcrypt.compare(
-    //   req.body.password,
-    //   userData.password
-    // );
+    // use `bcrypt.compare()` to compare the provided password and the hashed password
+    //I don't think the below compare is working because the passwords are the same but we still
+    // get the next error message
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      userData.password
+    );
+      //try doing something with checkPassword
+    // const validPassword = await userData.checkPassword(req.body.password);
 
-    // console.log("validpassword>>>>", validPassword)
+      //we know that validpassword is false here... bcrypt is telling us that it's false 
+      //look into it here: https://stackoverflow.com/questions/46022956/bcrypt-nodejs-compare-returns-false-whatever-the-password/50537073
+      console.log("here's the user's email", req.body.email)
+      console.log("here's the user's password", req.body.password)
+    console.log("validpassword>>>>", validPassword)
   
-    // if (!validPassword) {
-    //   res.status(400).json({ message: '2Login failed. Please try again!' });
-    //   return;
-    // }
+    if (!validPassword) {
+      res.status(400).json({ message: '2Login failed. Please try again!' });
+      return;
+    }
 
     req.session.save(() => {
       req.session.email = req.body.email

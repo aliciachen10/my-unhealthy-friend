@@ -1,5 +1,6 @@
 async function newFormHandler(event) {
   event.preventDefault();
+  console.log('sanity check')
   const distance = document.querySelector("#distance").value;
   const duration = document.querySelector("#duration").value;
   const exercise_type = document.querySelector("#exercise-type").value;
@@ -19,7 +20,7 @@ async function newFormHandler(event) {
       distance,
       duration,
       activity_id,
-      user_id: userId,
+      user_id: window.userId,
     }),
     headers: {
       "Content-Type": "application/json",

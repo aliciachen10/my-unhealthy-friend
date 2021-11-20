@@ -14,7 +14,6 @@ const withAuth = require('../../utils/auth');
 
 //working function
 async function edamamData(calories_burned, preference) {
-
   try { //use an await on the get request and an await on the response 
 
     const calories_burned_rounded = Math.round(Math.floor(calories_burned));
@@ -90,6 +89,7 @@ router.post("/", async (req, res) => {
     //preference_array should return an array that looks like this: ['italian', 'chinese', 'american', 'mexican']
     let preference_array = [];
     userData.categories.forEach(entry => preference_array.push(entry.category_name))
+    console.log(userData.categories)
     console.log('preference_array', preference_array)
     //get a random entry from the user preference array 
     let chooseRandomPreference = Math.floor(Math.random() * preference_array.length);
@@ -127,7 +127,7 @@ router.get('/user/:user_id', async (req, res) => {
 });
 
 async function getEdamamData(calories) {
-  const response = await fetch(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=${PROCESS.ENV.EDAMAM_API_KEY}&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=${calories}`)
+  const response = await fetch(`https://api.edamam.com/api/food-database/v2/parser?app_id=64a0e39a&app_key=${process.env.EDAMAM_API_KEY}&ingr=mexican&nutrition-type=cooking&category=fast-foods&calories=${calories}`)
   const recommendations = await response.json();
 }
 
