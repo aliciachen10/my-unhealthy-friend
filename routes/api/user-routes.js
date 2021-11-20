@@ -79,13 +79,13 @@ router.post('/', async (req, res) => {
       email: req.body.email,
       password: req.body.password 
     });
-
+    console.log(">>>", userData.get({plain: true}))
     const userData_found = await User.findOne({where: { email: req.body.email }});
 
     req.session.save(() => {
       req.session.loggedIn = true;
-      req.session.user_id = userData_found.id
-      req.session.weight = userData_found.weight;
+      req.session.user_id = userData.id
+      req.session.weight = userData.weight;
       res.status(200).json(userData);
     });
 

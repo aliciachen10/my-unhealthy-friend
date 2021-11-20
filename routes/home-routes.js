@@ -4,6 +4,7 @@ const { unsubscribe } = require('./api');
 const { Exercise, User, Activity, Category, Preference } = require('../models');
 const bcrypt = require('bcrypt');
 var moment = require('moment');
+const withAuth = require('../utils/auth')
 
 // The `/api/exercises` endpoint
 
@@ -30,24 +31,32 @@ router.get('/', async (req, res) => {
 
 //render user's exercise history
 //get all exercises, with their exercises and preferences
-router.get('/app', async (req, res) => {
+router.get('/app', withAuth, async (req, res) => {
+  console.log(">>>>>>>>", req.session)
   try {
+    // if (!req.session.user_id) {
+    //   res.render('all')
+    //   return;
+    // }
+
     const exerciseData = await Exercise.findAll({
       include: [{ model: User }, { model: Activity }],
       where: { 
         user_id: req.session.user_id 
       },
     });
+    
 
-    const userData = await User.findOne({include: [{ model: Category }], where: { id: req.session.user_id }});
+    // const userData = await User.findOne({include: [{ model: Category }], where: { id: req.session.user_id }});
 
-    req.session.save(() => {
-      req.session.loggedIn = true;
-      // req.session.preferences = userData.categories;
-    });
+    // req.session.save(() => {
+    //   req.session.loggedIn = true;
+    //   // req.session.preferences = userData.categories;
+    // });
   
 
     const exercises = exerciseData.map((exercise) => exercise.get({ plain: true })).reverse();
+    console.log("exercises console", exercises)
 
     // let exerciseTime = [];
     // let date;
