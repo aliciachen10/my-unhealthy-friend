@@ -89,8 +89,10 @@ body {
   <a href="/login">You must login first to view this page</a>
 {{/if}}
 
+{{#if loggedIn}}
 <script>
   var userId = {{user_id}};
 </script>
+{{/if}}
 
-<script src="/js/add-exercise.js">const userId = {{user_id}}</script> 
+<script src="/js/add-exercise.js"></script> 
