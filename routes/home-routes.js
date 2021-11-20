@@ -3,6 +3,7 @@ const got = require('got');
 const { unsubscribe } = require('./api');
 const { Exercise, User, Activity, Category, Preference } = require('../models');
 const bcrypt = require('bcrypt');
+var moment = require('moment');
 
 // The `/api/exercises` endpoint
 
@@ -44,10 +45,26 @@ router.get('/app', async (req, res) => {
       req.session.loggedIn = true;
       // req.session.preferences = userData.categories;
     });
-
-    // console.log("is this true????", req.session.preferences)
+  
 
     const exercises = exerciseData.map((exercise) => exercise.get({ plain: true })).reverse();
+
+    // let exerciseTime = [];
+    // let date;
+    // let m; 
+    // let formattedDate;
+    // for (i = 0; i < exercises.length; i++) {
+    //   // moment(exercises[i].createdAt, )
+    //   // date = new Date(exercises[i].createdAt.substring(0,9))
+    //   console.log(date)
+    //   // m = moment(date)
+    //   // console.log(date)
+    //   // formattedDate = m.format('l')
+    //   exerciseTime.push(exercises[i].createdAt.substring(0,9))
+    // }
+    // console.log(exerciseTime)
+    // console.log(exercises.map((exercise) => moment(exercise.createdAt).format('l')))
+    // console.log("here are exercises >>>", exercises)
     res.render('all', { exercises,
       loggedIn: req.session.loggedIn,
       user_id: req.session.user_id,
@@ -61,7 +78,7 @@ router.get('/app', async (req, res) => {
 
 // Login route
 router.get('/login', (req, res) => {
-  console.log("req.session>>>>>>>", req.session)
+
   // If the user is already logged in, redirect to the homepage
   if (req.session.loggedIn) {
     res.redirect('/');
