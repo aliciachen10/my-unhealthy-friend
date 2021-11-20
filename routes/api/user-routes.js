@@ -7,20 +7,20 @@ const withAuth = require('../../utils/auth');
 // The `/api/users` endpoint
 
 //get all users, with their exercises and preferences
-// router.get('/', async (req, res) => {
-//   try {
-//     const userData = await User.findAll({
-//       include: [{ model: Exercise }, { model: Category }],
-//     });
-//     // res.status(200).json(userData);
-//     const users = userData.map((user) => user.get({ plain: true }));
-//     // res.render('users', { users });
-//     res.status(200).json(userData)
-//     // console.log(req.session.loggedIn)
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+router.get('/allUser', async (req, res) => {
+  try {
+    const userData = await User.findAll({
+      include: [{ model: Exercise }, { model: Category }],
+    });
+    // res.status(200).json(userData);
+    const users = userData.map((user) => user.get({ plain: true }));
+    // res.render('users', { users });
+    res.status(200).json(userData)
+    // console.log(req.session.loggedIn)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 //new route to get user with exercises
 // Use withAuth middleware to prevent access to route
@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
     const user = userData.get({ plain: true });
     res.render('all', {
       ...user,
-      logged_in: true
+      loggedIn: true
     });
   } catch (err) {
     res.status(500).json(err);
@@ -59,6 +59,7 @@ router.get('/exercises', async (req, res) => {
 
 //create a new user
 router.post('/', async (req, res) => {
+   console.log("<<<create user post working")
   // {
   //   "firstName": "Andy",
   //   "lastName": "Alexander",
