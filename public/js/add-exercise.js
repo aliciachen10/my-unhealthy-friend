@@ -1,5 +1,4 @@
-
-  async function newFormHandler(event) {
+async function newFormHandler(event) {
   event.preventDefault();
   const distance = document.querySelector("#distance").value;
   const duration = document.querySelector("#duration").value;
@@ -13,6 +12,7 @@
   } else if (exercise_type === "swimming") {
     activity_id = 3;
   }
+
   const response = await fetch(`/api/exercises`, {
     method: "POST",
     body: JSON.stringify({
@@ -26,6 +26,7 @@
     },
   });
   const formattedResponse = await response.json();
+  console.log("formattedResponse>>>>>", formattedResponse)
   const recommendation_div = document.querySelector(".recommendations-div");
   let final_recommendations = [];
   //filter the entries by calories manually
@@ -80,8 +81,15 @@
       "Content-Type": "application/json",
     },
   });
+  
   const formattedActivityResponse = await activity_response.json();
+  console.log(formattedActivityResponse)
   formattedActivityResponse.slice().reverse().forEach(exercise => {
+
+
+
+m = moment(exercise.createdAt)
+
     const card = `<div class="card exercise col-md-4">
     <div class="card-content">
       <h4 class="card-title">
@@ -94,12 +102,12 @@
         <p>Distance: ${exercise.distance} miles</p>
         <p>Duration: ${exercise.duration} minutes</p>
         <p>Calories burned: ${exercise.calories_burned} kCal</p>
-        <p>When you did it: ${exercise.createdAt}</p>
+        <p>When you did it: ${m.format("l")}</p>
       </p>
     </div>
     <div class="card-read-more">
       <a
-        href="http://github.com/aliciachen10/weather-dashboard"
+        href="http://localhost:3001/app"
         class="btn btn-link btn-block"
       >
         Get suggestions
