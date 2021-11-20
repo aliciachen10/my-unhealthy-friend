@@ -69,7 +69,6 @@ router.post('/', async (req, res) => {
   try {
     
     const newUser = req.body
-    newUser.password = await bcrypt.hash(req.body.password, 10);
 
     const userData = await User.create({
       firstName: req.body.firstName,
@@ -227,17 +226,19 @@ router.post('/login', async (req, res) => {
       return;
     }
   
-    // const validPassword = await bcrypt.compare(
-    //   req.body.password,
-    //   userData.password
-    // );
+    console.log("<<<<<<<", req.body.password);
+    console.log("<<<<<<<", userData.password);
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      userData.password
+    );
 
-    // console.log("validpassword>>>>", validPassword)
+    console.log("validpassword>>>>", validPassword)
   
-    // if (!validPassword) {
-    //   res.status(400).json({ message: '2Login failed. Please try again!' });
-    //   return;
-    // }
+    if (!validPassword) {
+      res.status(400).json({ message: '2Login failed. Please try again!' });
+      return;
+    }
 
     req.session.save(() => {
       req.session.email = req.body.email
