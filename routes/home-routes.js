@@ -4,6 +4,7 @@ const { unsubscribe } = require('./api');
 const { Exercise, User, Activity, Category, Preference } = require('../models');
 const bcrypt = require('bcrypt');
 var moment = require('moment');
+const withAuth = require("../utils/auth");
 
 // The `/api/exercises` endpoint
 
@@ -30,7 +31,7 @@ router.get('/', async (req, res) => {
 
 //render user's exercise history
 //get all exercises, with their exercises and preferences
-router.get('/app', async (req, res) => {
+router.get('/app', withAuth, async (req, res) => {
   try {
     const exerciseData = await Exercise.findAll({
       include: [{ model: User }, { model: Activity }],
