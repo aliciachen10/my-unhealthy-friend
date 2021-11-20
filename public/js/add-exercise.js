@@ -13,6 +13,7 @@ async function newFormHandler(event) {
   } else if (exercise_type === "swimming") {
     activity_id = 3;
   }
+
   const response = await fetch(`/api/exercises`, {
     method: "POST",
     body: JSON.stringify({
