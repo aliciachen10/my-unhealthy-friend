@@ -1,5 +1,6 @@
 async function newFormHandler(event) {
   event.preventDefault();
+  console.log('sanity check')
   const distance = document.querySelector("#distance").value;
   const duration = document.querySelector("#duration").value;
   const exercise_type = document.querySelector("#exercise-type").value;
@@ -12,14 +13,13 @@ async function newFormHandler(event) {
   } else if (exercise_type === "swimming") {
     activity_id = 3;
   }
-
   const response = await fetch(`/api/exercises`, {
     method: "POST",
     body: JSON.stringify({
       distance,
       duration,
       activity_id,
-      user_id: userId,
+      user_id: window.userId,
     }),
     headers: {
       "Content-Type": "application/json",
