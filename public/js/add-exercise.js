@@ -89,9 +89,6 @@ async function newFormHandler(event) {
 
 
 m = moment(exercise.createdAt)
-console.log(m)
-console.log(m._pf.parsedDateParts[0])
-
 
     const card = `<div class="card exercise col-md-4">
     <div class="card-content">
@@ -105,7 +102,7 @@ console.log(m._pf.parsedDateParts[0])
         <p>Distance: ${exercise.distance} miles</p>
         <p>Duration: ${exercise.duration} minutes</p>
         <p>Calories burned: ${exercise.calories_burned} kCal</p>
-        <p>When you did it: ${m._pf.parsedDateParts[1] + 1}/${m._pf.parsedDateParts[2]}/${m._pf.parsedDateParts[0]}</p>
+        <p>When you did it: ${m.format("l")}</p>
       </p>
     </div>
     <div class="card-read-more">
